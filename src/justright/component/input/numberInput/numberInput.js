@@ -1,5 +1,5 @@
 import { Logger } from "coreutil_v1";
-import { Component, ComponentBuilder, NumberValidator, Stylesheet, StylesheetBuilder } from "justright_core_v1";
+import { Component, ComponentBuilder, NumberValidator, Stylesheet, StylesheetBuilder } from "nuttin2c_core_v1";
 import { CommonInput } from "../commonInput.js";
 
 const LOG = new Logger("TextInput");

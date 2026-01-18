@@ -1,4 +1,4 @@
-import { Component, ComponentBuilder, RequiredValidator, Stylesheet, StylesheetBuilder } from "justright_core_v1";
+import { Component, ComponentBuilder, RequiredValidator, Stylesheet, StylesheetBuilder } from "nuttin2c_core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput.js";
 

@@ -1,4 +1,4 @@
-import { Component } from "justright_core_v1";
+import { Component } from "nuttin2c_core_v1";
 
 export class Dependencies {
 

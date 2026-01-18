@@ -1,6 +1,6 @@
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput";
-import { Component, ComponentBuilder, Stylesheet, StylesheetBuilder } from "justright_core_v1";
+import { Component, ComponentBuilder, Stylesheet, StylesheetBuilder } from "nuttin2c_core_v1";
 
 const LOG = new Logger("HiddenInput");
 

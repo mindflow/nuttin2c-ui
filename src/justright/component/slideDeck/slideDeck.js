@@ -4,7 +4,7 @@ import { CanvasStyles,
     EventManager,
     StylesheetBuilder,
     InlineComponentFactory
-} from "justright_core_v1";
+} from "nuttin2c_core_v1";
 import { InjectionPoint, Provider } from "mindi_v1";
 import { SlideDeckEntry } from "./slideDeckEntry/slideDeckEntry.js";
 

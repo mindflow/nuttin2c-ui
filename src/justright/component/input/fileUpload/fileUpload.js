@@ -11,7 +11,7 @@ import { CanvasStyles,
     Stylesheet,
     ComponentBuilder,
     InlineComponentFactory
-} from "justright_core_v1";
+} from "nuttin2c_core_v1";
 import { InjectionPoint, Provider } from "mindi_v1";
 import { FileUploadEntry } from "./fileUploadEntry/fileUploadEntry.js";
 import { CommonEvents } from "../../common/commonEvents.js";

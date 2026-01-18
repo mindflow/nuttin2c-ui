@@ -1,6 +1,6 @@
 import { Logger } from "coreutil_v1";
 import { InjectionPoint, Provider } from "mindi_v1";
-import { Component, EventManager, SimpleElement, ComponentBuilder, InlineComponentFactory } from "justright_core_v1";
+import { Component, EventManager, SimpleElement, ComponentBuilder, InlineComponentFactory } from "nuttin2c_core_v1";
 import { TreePanelEntry } from "./treePanelEntry/treePanelEntry.js";
 import { Panel } from "../panel/panel.js";
 import { ContainerEvent } from "containerbridge_v1";

@@ -8,7 +8,7 @@ import {
     Stylesheet,
     ComponentBuilder,
     InlineComponentFactory
-} from "justright_core_v1";
+} from "nuttin2c_core_v1";
 import { InjectionPoint } from "mindi_v1";
 import { Logger, Method } from "coreutil_v1";
 import { CommonEvents } from "../../common/commonEvents";

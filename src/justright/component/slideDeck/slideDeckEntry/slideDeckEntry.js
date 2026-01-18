@@ -7,13 +7,13 @@ import { BaseElement,
     ComponentBuilder,
     Stylesheet,
     InlineComponentFactory
-} from "justright_core_v1";
+} from "nuttin2c_core_v1";
 import { InjectionPoint } from "mindi_v1";
 
 export class SlideDeckEntry {
 
-    //static TEMPLATE_URL = "/assets/justrightjs-ui/slideDeckEntry.html";
-    //static STYLES_URL = "/assets/justrightjs-ui/slideDeckEntry.css";
+    //static TEMPLATE_URL = "/assets/nuttin2c-ui/slideDeckEntry.html";
+    //static STYLES_URL = "/assets/nuttin2c-ui/slideDeckEntry.css";
 
     static DEFAULT_CLASS = "slide-deck-entry";
 
