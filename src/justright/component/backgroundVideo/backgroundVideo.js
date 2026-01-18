@@ -5,7 +5,7 @@ import { VideoElement,
 	ComponentBuilder,
 	InlineComponentFactory, 
 	Stylesheet
- } from "nuttin2c_core_v1";
+ } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { InjectionPoint } from "mindi_v1";
 import { ContainerAsync } from "containerbridge_v1"

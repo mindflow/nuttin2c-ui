@@ -1,4 +1,4 @@
-import { StylesheetBuilder } from "nuttin2c_core_v1";
+import { StylesheetBuilder } from "nuttin2c-core_v1";
 import { ColorApplicator } from "./colorApplicator";
 
 export class ElementThemeApplicator {

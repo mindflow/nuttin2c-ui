@@ -1,4 +1,4 @@
-import { Component, ComponentBuilder, EmailValidator, Stylesheet, StylesheetBuilder } from "nuttin2c_core_v1";
+import { Component, ComponentBuilder, EmailValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput.js";
 

@@ -5,10 +5,10 @@ import copy from 'rollup-plugin-copy';
 
 export default [{
     input: "src/**/*.js",
-    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1', 'containerbridge_v1','nuttin2c_core_v1' ],
+    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1', 'containerbridge_v1','nuttin2c-core_v1' ],
     output: {
-        name: 'nuttin2c_ui_v1',
-        file: "dist/jsm/nuttin2c_ui_v1.js",
+        name: 'nuttin2c-ui_v1',
+        file: "dist/jsm/nuttin2c-ui_v1.js",
         sourcemap: "inline",
         format: "es"
     },
@@ -19,16 +19,16 @@ export default [{
             'xmlparser_v1': './xmlparser_v1.js',
             'mindi_v1': './mindi_v1.js',
             'containerbridge_v1': './containerbridge_v1.js',
-            'nuttin2c_core_v1': './nuttin2c_core_v1.js',
+            'nuttin2c-core_v1': './nuttin2c-core_v1.js',
             replaceStage: 'renderChunk'
         })
     ]
 },{
     input: "src/**/*.js",
-    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1','containerbridge_v1','nuttin2c_core_v1' ],
+    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1','containerbridge_v1','nuttin2c-core_v1' ],
     output: {
-        name: 'nuttin2c_ui_v1',
-        file: "dist/jsm/nuttin2c_ui_v1.min.js",
+        name: 'nuttin2c-ui_v1',
+        file: "dist/jsm/nuttin2c-ui_v1.min.js",
         format: "es"
     },
     plugins: [
@@ -38,17 +38,17 @@ export default [{
             'xmlparser_v1': './xmlparser_v1.js',
             'mindi_v1': './mindi_v1.js',
             'containerbridge_v1': './containerbridge_v1.js',
-            'nuttin2c_core_v1': './nuttin2c_core_v1.js',
+            'nuttin2c-core_v1': './nuttin2c-core_v1.js',
             replaceStage: 'renderChunk'
         }),
         terser()
     ]
 },{
     input: "src/**/*.js",
-    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1','containerbridge_v1','nuttin2c_core_v1' ],
+    external: [ 'coreutil_v1','xmlparser_v1','mindi_v1','containerbridge_v1','nuttin2c-core_v1' ],
     output: {
-        name: 'nuttin2c_ui_v1',
-        file: "dist/cjs/nuttin2c_ui_v1.js",
+        name: 'nuttin2c-ui_v1',
+        file: "dist/cjs/nuttin2c-ui_v1.js",
         sourcemap: "inline",
         format: "cjs"
     },

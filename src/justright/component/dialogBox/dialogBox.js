@@ -7,7 +7,7 @@ import {
     Stylesheet,
     ComponentBuilder,
     InlineComponentFactory
-} from "nuttin2c_core_v1";
+} from "nuttin2c-core_v1";
 import { TimePromise, Logger, Method, List } from "coreutil_v1";
 import { InjectionPoint } from "mindi_v1";
 import { BackShade } from "../backShade/backShade.js";

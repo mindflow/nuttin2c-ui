@@ -1,4 +1,4 @@
-import { Component, ComponentBuilder, EqualsPropertyValidator, Stylesheet, StylesheetBuilder } from "nuttin2c_core_v1";
+import { Component, ComponentBuilder, EqualsPropertyValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../../commonInput.js";
 const LOG = new Logger("PasswordMatcherInputControl");
