@@ -5,7 +5,7 @@ import { CanvasStyles,
     StylesheetBuilder,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint, Provider } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { SlideDeckEntry } from "./slideDeckEntry/slideDeckEntry.js";
 
 export class SlideDeck {
@@ -140,3 +140,5 @@ export class SlideDeck {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SlideDeck));

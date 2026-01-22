@@ -9,7 +9,7 @@ import {
     InlineComponentFactory
 } from "nuttin2c-core_v1";
 import { TimePromise, Logger, Method, List } from "coreutil_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { BackShade } from "../backShade/backShade.js";
 import { BackShadeListeners } from "../backShade/backShadeListeners.js";
 import { ContainerElementUtils, ContainerEvent } from "containerbridge_v1";
@@ -466,3 +466,5 @@ export class DialogBox {
         ContainerElementUtils.scrollLockTo(this.component.get("dialogBoxContent").containerElement, 0, 0, 1000);
     }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(DialogBox));

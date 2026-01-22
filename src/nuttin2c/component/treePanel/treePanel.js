@@ -1,5 +1,5 @@
 import { Logger } from "coreutil_v1";
-import { InjectionPoint, Provider } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { Component, EventManager, SimpleElement, ComponentBuilder, InlineComponentFactory } from "nuttin2c-core_v1";
 import { TreePanelEntry } from "./treePanelEntry/treePanelEntry.js";
 import { Panel } from "../panel/panel.js";
@@ -146,3 +146,5 @@ export class TreePanel {
 		this.component.setChild("rootElement", this.treePanelEntry.component);
 	}
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(TreePanel));

@@ -1,5 +1,5 @@
 import { Logger, Method } from "coreutil_v1";
-import { InjectionPoint, Provider } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { Component, EventManager, StateManager, InlineComponentFactory, ComponentBuilder } from "nuttin2c-core_v1";
 import { Panel } from "../panel/panel.js";
 import { LinePanelEntry } from "./linePanelEntry/linePanelEntry.js";
@@ -115,3 +115,5 @@ export class LinePanel {
 		return linePanelEntry.component;
     }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(LinePanel));

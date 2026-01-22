@@ -7,7 +7,7 @@ import { Component,
 	InlineComponentFactory,
 	StyleSelectorAccessor
 } from "nuttin2c-core_v1";
-import { InjectionPoint, Provider } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { Panel } from "../../panel/panel.js";
 import { RadioToggleIcon } from "../../input/radioToggleIcon/radioToggleIcon.js";
 import { ContainerEvent } from "containerbridge_v1";
@@ -235,3 +235,5 @@ export class TreePanelEntry {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(TreePanelEntry));

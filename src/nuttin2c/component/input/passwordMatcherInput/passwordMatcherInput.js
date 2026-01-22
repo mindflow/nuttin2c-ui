@@ -8,7 +8,7 @@ import {
     ComponentBuilder,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { Logger, PropertyAccessor, Method } from "coreutil_v1";
 import { PasswordMatcherInputValue } from "./passwordMatcherInputValue/passwordMatcherInputValue.js";
 import { PasswordMatcherInputControl } from "./passwordMatcherInputControl/passwordMatcherInputControl.js";
@@ -151,3 +151,5 @@ export class PasswordMatcherInput {
     disable() { this.passwordMatcherInputValue.disable(); this.passwordMatcherInputControl.disable(); }
     clear() { this.passwordMatcherInputValue.clear(); this.passwordMatcherInputControl.clear(); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordMatcherInput));

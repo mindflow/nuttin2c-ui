@@ -12,7 +12,7 @@ import { CanvasStyles,
     ComponentBuilder,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint, Provider } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { FileUploadEntry } from "./fileUploadEntry/fileUploadEntry.js";
 import { CommonEvents } from "../../common/commonEvents.js";
 
@@ -410,3 +410,5 @@ export class FileUpload {
 
     }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(FileUpload));

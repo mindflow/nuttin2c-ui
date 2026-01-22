@@ -1,6 +1,7 @@
 import { Logger } from "coreutil_v1";
 import { Component, ComponentBuilder, NumberValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { CommonInput } from "../commonInput.js";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("TextInput");
 
@@ -136,3 +137,5 @@ export class NumberInput extends CommonInput {
     showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "number-input-error number-input-error-visible"); }
     hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "number-input-error number-input-error-hidden"); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(NumberInput));

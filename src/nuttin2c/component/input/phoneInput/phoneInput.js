@@ -1,6 +1,7 @@
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput.js";
 import { Component, ComponentBuilder, PhoneValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("PhoneInput");
 
@@ -147,3 +148,5 @@ export class PhoneInput extends CommonInput {
     showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "phone-input-error phone-input-error-visible"); }
     hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "phone-input-error phone-input-error-hidden"); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PhoneInput));

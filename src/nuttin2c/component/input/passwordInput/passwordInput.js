@@ -1,6 +1,7 @@
 import { Component, ComponentBuilder, RequiredValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput.js";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("PasswordInput");
 
@@ -136,3 +137,5 @@ export class PasswordInput extends CommonInput {
     showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "email-input-error email-input-error-visible"); }
     hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "email-input-error email-input-error-hidden"); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordInput));

@@ -8,7 +8,7 @@ import { BaseElement,
     Stylesheet,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 export class SlideDeckEntry {
 
@@ -161,3 +161,5 @@ export class SlideDeckEntry {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SlideDeckEntry));

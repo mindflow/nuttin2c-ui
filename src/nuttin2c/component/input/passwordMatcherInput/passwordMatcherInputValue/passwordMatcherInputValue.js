@@ -1,6 +1,7 @@
 import { Component, ComponentBuilder, PasswordValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../../commonInput.js";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("PasswordMatcherInputValue");
 
@@ -158,3 +159,5 @@ export class PasswordMatcherInputValue extends CommonInput {
     showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "password-matcher-input-value-error password-matcher-input-value-error-visible"); }
     hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "password-matcher-input-value-error password-matcher-input-value-error-hidden"); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordMatcherInputValue));

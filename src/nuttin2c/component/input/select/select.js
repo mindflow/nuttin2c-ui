@@ -10,7 +10,7 @@ import { CanvasStyles,
     ComponentBuilder,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
 
 const LOG = new Logger("Select");
@@ -209,3 +209,5 @@ export class Select {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(Select));

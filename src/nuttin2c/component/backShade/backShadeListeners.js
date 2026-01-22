@@ -1,5 +1,6 @@
 import { ContainerEvent } from "containerbridge_v1";
 import { Method } from "coreutil_v1";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 export class BackShadeListeners {
 
@@ -37,3 +38,5 @@ export class BackShadeListeners {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(BackShadeListeners));

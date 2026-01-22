@@ -1,3 +1,5 @@
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
+
 export class PasswordMatcherModel {
 
     constructor() {
@@ -22,3 +24,5 @@ export class PasswordMatcherModel {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordMatcherModel));

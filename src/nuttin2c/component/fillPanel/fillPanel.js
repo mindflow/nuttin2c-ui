@@ -3,7 +3,7 @@ import { Component,
     ComponentBuilder,
     InlineComponentFactory
 } from "nuttin2c-core_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { Logger } from "coreutil_v1";
 
 const LOG = new Logger("FillPanel");
@@ -44,3 +44,5 @@ export class FillPanel {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(FillPanel));

@@ -1,6 +1,7 @@
 import { Component, ComponentBuilder, EqualsPropertyValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../../commonInput.js";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 const LOG = new Logger("PasswordMatcherInputControl");
 
 export class PasswordMatcherInputControl extends CommonInput {
@@ -136,3 +137,5 @@ export class PasswordMatcherInputControl extends CommonInput {
     showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "password-matcher-input-control-error password-matcher-input-control-error-visible"); }
     hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "password-matcher-input-control-error password-matcher-input-control-error-hidden"); }
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordMatcherInputControl));

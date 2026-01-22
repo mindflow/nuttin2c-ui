@@ -8,7 +8,7 @@ import {
     Stylesheet
 } from "nuttin2c-core_v1";
 import { Logger, TimePromise } from "coreutil_v1";
-import { InjectionPoint } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { BackShadeListeners } from "./backShadeListeners.js";
 
 const LOG = new Logger("BackShade");
@@ -119,3 +119,5 @@ export class BackShade {
     }
     
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(BackShade));

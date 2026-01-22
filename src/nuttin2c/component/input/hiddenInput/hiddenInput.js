@@ -1,6 +1,7 @@
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput";
 import { Component, ComponentBuilder, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
+import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("HiddenInput");
 
@@ -44,3 +45,5 @@ export class HiddenInput extends CommonInput {
     }
 
 }
+
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(HiddenInput));
