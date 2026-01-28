@@ -59,6 +59,42 @@ div.hidden {
     display: none;
 }
 
+div.animateHeight {
+    transition: 
+        max-height 0.3s ease-in-out,
+        display 0.3s ease allow-discrete;
+}
+
+div.defaultHeight {
+    overflow: hidden;
+    transition-duration: 0s;
+    max-height: 50pt;
+}
+
+div.hiddenHeight {
+    overflow: hidden;
+    max-height: 0pt;
+    display: none;
+}
+
+div.animateWidth {
+    transition: 
+        max-width 0.3s ease-in-out,
+        display 0.3s ease allow-discrete;
+}
+
+div.defaultWidth {
+    overflow: hidden;
+    transition-duration: 0s;
+    max-width: 50pt;
+}
+
+div.hiddenWidth {
+    overflow: hidden;
+    max-width: 0pt;
+    display: none;
+}
+
 .green {
     color: green;
 }
@@ -272,4 +308,79 @@ div.hidden {
 
 .cntr-gap-large {
     gap: var(--large-gap);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+}
+
+@-webkit-keyframes spinner-rotate {
+
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner-rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.spinner, .spinner:after {
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+
+.spinner {
+    margin: 0.5em;
+    display: inline-block;
+    border-top: 0.2em solid rgba(128, 128, 128, 0.2);
+    border-right: 0.2em solid rgba(128, 128, 128, 0.2);
+    border-bottom: 0.2em solid rgba(128, 128, 128, 0.2);
+    border-left: 0.2em solid #999999;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: spinner-rotate 1.1s infinite linear;
+    animation: spinner-rotate 1.1s infinite linear;
+}
+
+.spinner-container {
+    transition:
+        opacity 0.5s ease-in-out,
+        max-width 0.5s ease-in-out,
+        display 0.5s ease allow-discrete;
+}
+
+.spinner-container-visible {
+    max-width: 50pt;
+    opacity: 1;
+    display: inline-block;
+    height: 2.5em;
+    vertical-align: middle;
+}
+
+.spinner-container-hidden {
+    max-width: 0pt;
+    opacity: 0;
+    display: none;
+    height: 2.5em;
+    vertical-align: middle;
 }

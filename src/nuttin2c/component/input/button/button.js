@@ -31,8 +31,8 @@ export class Button {
     static SIZE_MEDIUM = "button-medium";
     static SIZE_LARGE = "button-large";
 
-    static SPINNER_VISIBLE = "button-spinner-container-visible";
-    static SPINNER_HIDDEN = "button-spinner-container-hidden";
+    static SPINNER_VISIBLE = "spinner-container-visible";
+    static SPINNER_HIDDEN = "spinner-container-hidden";
 
     static EVENT_CLICKED = CommonEvents.CLICKED;
 
@@ -73,86 +73,11 @@ export class Button {
      */
     static buildStylesheet(stylesheetBuilder) {
         stylesheetBuilder
-            .media("(prefers-reduced-motion: reduce)")
-            .open()
-                .selector(".button")
-                .open()
-                    .style("transition", "none")
-                .close()
-            .close()
-
-            .media("@-webkit-keyframes button-spinner-rotate")
-            .open()
-                .selector("0%")
-                .open()
-                    .style("-webkit-transform", "rotate(0deg)")
-                    .style("transform", "rotate(0deg)")
-                .close()
-
-                .selector("100%")
-                .open()
-                    .style("-webkit-transform", "rotate(360deg)")
-                    .style("transform", "rotate(360deg)")
-                .close()
-            .close()
-
-            .media("@keyframes button-spinner-rotate")
-            .open()
-                .selector("0%")
-                .open()
-                    .style("-webkit-transform", "rotate(0deg)")
-                    .style("transform", "rotate(0deg)")
-                .close()
-
-                .selector("100%")
-                .open()
-                    .style("-webkit-transform", "rotate(360deg)")
-                    .style("transform", "rotate(360deg)")
-                .close()
-            .close()
-
             .selector(".button-outline")
             .open()
                 .style("display", "inline-block")
                 .style("vertical-align", "middle")
             .close()
-
-            .selector(".button-spinner, .button-spinner:after")
-            .open()
-                .style("border-radius", "50%")
-                .style("width", "1.5em")
-                .style("height", "1.5em")
-            .close()
-
-            .selector(".button-spinner")
-            .open()
-                .style("margin", "0.5em")
-                .style("display", "inline-block")
-                .style("border-top", "0.2em solid rgba(128, 128, 128, 0.2)")
-                .style("border-right", "0.2em solid rgba(128, 128, 128, 0.2)")
-                .style("border-bottom", "0.2em solid rgba(128, 128, 128, 0.2)")
-                .style("border-left", "0.2em solid #999999")
-                .style("-webkit-transform", "translateZ(0)")
-                .style("-ms-transform", "translateZ(0)")
-                .style("transform", "translateZ(0)")
-                .style("-webkit-animation", "button-spinner-rotate 1.1s infinite linear")
-                .style("animation", "button-spinner-rotate 1.1s infinite linear")
-            .close()
-
-            .selector(".button-spinner-container-visible")
-            .open()
-                .style("display", "inline-block")
-                .style("height", "2.5em")
-                .style("vertical-align", "middle")
-            .close()
-
-            .selector(".button-spinner-container-hidden")
-            .open()
-                .style("display", "none")
-                .style("height", "2.5em")
-                .style("vertical-align", "middle")
-            .close()
-
             .selector(".button")
             .open()
                 .style("display", "inline-block")
@@ -277,9 +202,9 @@ export class Button {
             .root("div", "class=button-outline")
             .open()
                 .node("button", "class=button", "id=button", "type=button")
-                .node("div", "class=button-spinner-container-hidden", "id=spinnerContainer")
+                .node("div", "class=spinner-container-hidden", "id=spinnerContainer")
                 .open()
-                    .node("div", "class=button-spinner")
+                    .node("div", "class=spinner")
                 .close()
             .close()
             .build();

@@ -1,9 +1,15 @@
 import { Logger } from "coreutil_v1";
+import { ContainerEvent } from "containerbridge_v1";
 import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
-import { Component, EventManager, SimpleElement, ComponentBuilder, InlineComponentFactory } from "nuttin2c-core_v1";
+import { Component,
+	EventManager,
+	SimpleElement,
+	ComponentBuilder,
+	InlineComponentFactory } from "nuttin2c-core_v1";
+
 import { TreePanelEntry } from "./treePanelEntry/treePanelEntry.js";
 import { Panel } from "../panel/panel.js";
-import { ContainerEvent } from "containerbridge_v1";
+
 
 const LOG = new Logger("TreePanel");
 
@@ -11,6 +17,7 @@ export class TreePanel {
 
 	static EVENT_REFRESH_CLICKED = "refreshClicked";
 	static RECORD_ELEMENT_REQUESTED = "recordElementRequested";
+	static BEFORE_LOAD_ELEMENT_REQUESTED = "beforeLoadElementRequested";
 	static SUB_RECORDS_STATE_UPDATE_REQUESTED = "subRecordsStateUpdateRequested";
 	static EVENT_EXPAND_TOGGLE_OVERRIDE = "expandToggleOverride";
 
@@ -67,7 +74,7 @@ export class TreePanel {
 			.listenTo(TreePanelEntry.RECORD_ELEMENT_REQUESTED, this.entryRequested, this)
 			.listenTo(TreePanelEntry.EVENT_EXPAND_TOGGLE_OVERRIDE, this.expandToggleOverride, this)
 			.listenTo(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, this.subRecordsUpdateRequested, this);
-			
+		this.treePanelEntry.toggleMessage(true);
 		// Root element has no record
 		this.treePanelEntry.component.get("subrecordIndent").remove();
 		this.treePanelEntry.component.get("recordElementContainer").remove();
@@ -127,13 +134,9 @@ export class TreePanel {
 	 * @returns {Promise<TreePanelEntry[]>}
 	 */
 	async subRecordsUpdateRequested(event, record, stateManager, elementButtonsContainer) {
-		try {
-			await this.events
-				.trigger(TreePanel.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, record, stateManager, elementButtonsContainer]);
-
-		} catch (error) {
-			LOG.error(error);
-		}
+		this.treePanelEntry.toggleChildElements(true);
+		this.events
+			.trigger(TreePanel.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, record, stateManager, elementButtonsContainer]);
 	}
 
 	/**
@@ -142,7 +145,7 @@ export class TreePanel {
 	 * @param {ContainerEvent} event 
 	 */
 	async reset(event) {
-		await this.subRecordsUpdateRequested(event, null, this.treePanelEntry.arrayState);
+		this.subRecordsUpdateRequested(event, null, this.treePanelEntry.arrayState);
 		this.component.setChild("rootElement", this.treePanelEntry.component);
 	}
 }

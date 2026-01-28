@@ -18,6 +18,7 @@ const LOG = new Logger("TreePanelEntry");
 export class TreePanelEntry {
 
 	static RECORD_ELEMENT_REQUESTED = "recordElementRequested";
+	static BEFORE_LOAD_ELEMENT_REQUESTED = "beforeLoadElementRequested";
 	static SUB_RECORDS_STATE_UPDATE_REQUESTED = "subRecordsStateUpdateRequested";
 	static EVENT_EXPAND_TOGGLE_OVERRIDE = "expandToggleOverride";
 
@@ -60,13 +61,19 @@ export class TreePanelEntry {
 				.node("div", "id=recordElementContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered")
 				.open()
 					.node("div", "id=expandButton", "class=cntr-override-prevent-size-change")
+					.node("div", "class=cntr-override-prevent-size-change spinner-container spinner-container-hidden", "id=message")
+					.open()
+						.node("div", "class=spinner")
+					.close()
 					.node("div", "id=recordElement")
 				.close()
+
 				.node("div", "id=buttonsContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered hidden")
 				.open()
 					.node("div", "id=buttonsIndent", "class=cntr-override-prevent-size-change width-1")
 					.node("div", "id=buttons", "class=cntr-gap-small")
 				.close()
+
 				.node("div", "id=subrecordElementsContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered hidden")
 				.open()
 					.node("div", "id=subrecordIndent", "class=cntr-override-prevent-size-change width-1")
@@ -104,11 +111,13 @@ export class TreePanelEntry {
 		if (object instanceof Array) {
 
 			this.component.clearChildren("subrecordElements");
+			this.toggleChildElements(true);
+			this.toggleMessage(true);
 			object.forEach(async (record) => {
 				this.component.addChild("subrecordElements", await this.createSubEntry(record));
 			});
-			await this.toggleChildElements(true);
 		}
+		this.toggleMessage(false);
     }
 
     /**
@@ -117,7 +126,6 @@ export class TreePanelEntry {
      */
     async createSubEntry(record) {
 		const treePanelSubEntry = await this.treePanelEntryProvider.get([record]);
-
 		const recordElement = await this.eventManager.trigger(TreePanelEntry.RECORD_ELEMENT_REQUESTED, [null, record, treePanelSubEntry, this]);
         
 		if (!recordElement) {
@@ -179,17 +187,25 @@ export class TreePanelEntry {
 	 * @param {SimpleElement} elementButtonsContainer
 	 */
 	async subRecordsUpdateRequested(event, record, stateManager, elementButtonsContainer) {
-		try {
-			await this.events
-				.trigger(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, record, stateManager, elementButtonsContainer]);
-			await this.toggleChildElements(true);
-		} catch (error) {
-			LOG.error(error);
-		}
+		this.events
+			.trigger(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, record, stateManager, elementButtonsContainer]);
 	}
 
 	/**
 	 * 
+	 * @param {Boolean} visible 
+	 */
+	async toggleMessage(visible) {
+		if (visible) {
+			StyleSelectorAccessor.from(this.component.get("message")).disable("spinner-container-hidden");
+			StyleSelectorAccessor.from(this.component.get("message")).enable("spinner-container-visible");
+			return;
+		}
+		StyleSelectorAccessor.from(this.component.get("message")).enable("spinner-container-hidden");
+		StyleSelectorAccessor.from(this.component.get("message")).disable("spinner-container-visible");
+	}
+
+	/**
 	 * @param {Boolean} visible 
 	 */
 	async toggleChildElements(visible) {
@@ -216,12 +232,15 @@ export class TreePanelEntry {
 	 * @param {ContainerEvent} event 
 	 */
     async loadSubRecordsClicked(event) {
+		this.toggleButtons(true);
+		this.toggleChildElements(true);
+		this.toggleMessage(true);
 		const elementButtonsContainer = await this.component.get("buttons");
-        await this.eventManager
-			.trigger(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, this.record, this.arrayState, elementButtonsContainer]);
 		if (elementButtonsContainer.containerElement.firstChild) {
 			await this.toggleButtons(true);
 		}
+        this.eventManager
+			.trigger(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, this.record, this.arrayState, elementButtonsContainer]);
     }
 
 	/**
@@ -229,6 +248,7 @@ export class TreePanelEntry {
 	 */
     async hideSubRecordsClicked(event) {
 		await this.toggleChildElements(false);
+		await this.toggleMessage(false);
 		await this.toggleButtons(false);
         this.component.get("subrecordElements").clear();
 		this.component.get("buttons").clear();
