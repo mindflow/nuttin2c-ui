@@ -358,29 +358,29 @@ div.hiddenWidth {
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
-    -webkit-animation: spinner-rotate 1.1s infinite linear;
+    -webkit-animation: -spinner-rotate 1.1s infinite linear;
     animation: spinner-rotate 1.1s infinite linear;
 }
 
-.spinner-container {
-    transition:
-        opacity 0.5s ease-in-out,
-        max-width 0.5s ease-in-out,
-        display 0.5s ease allow-discrete;
-}
-
 .spinner-container-visible {
-    max-width: 50pt;
+    max-width: 200pt;
     opacity: 1;
     display: inline-block;
     height: 2.5em;
     vertical-align: middle;
+    visibility: visible;
+    transition-duration: 0s;
 }
 
 .spinner-container-hidden {
     max-width: 0pt;
     opacity: 0;
-    display: none;
+    display: inline-block;
     height: 2.5em;
     vertical-align: middle;
+    visibility: hidden;
+    transition:
+        opacity 0.2s ease-in,
+        max-width 0.2s ease-in-out,
+        visibility 0.2s ease-in-out;
 }

@@ -74,7 +74,7 @@ export class TreePanel {
 			.listenTo(TreePanelEntry.RECORD_ELEMENT_REQUESTED, this.entryRequested, this)
 			.listenTo(TreePanelEntry.EVENT_EXPAND_TOGGLE_OVERRIDE, this.expandToggleOverride, this)
 			.listenTo(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, this.subRecordsUpdateRequested, this);
-		this.treePanelEntry.toggleMessage(true);
+		this.treePanelEntry.toggleSpinner(true);
 		// Root element has no record
 		this.treePanelEntry.component.get("subrecordIndent").remove();
 		this.treePanelEntry.component.get("recordElementContainer").remove();
@@ -135,7 +135,7 @@ export class TreePanel {
 	 */
 	async subRecordsUpdateRequested(event, record, stateManager, elementButtonsContainer) {
 		this.treePanelEntry.toggleChildElements(true);
-		this.events
+		await this.events
 			.trigger(TreePanel.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, record, stateManager, elementButtonsContainer]);
 	}
 
