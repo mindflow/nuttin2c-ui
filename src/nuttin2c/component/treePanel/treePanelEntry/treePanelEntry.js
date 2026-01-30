@@ -68,7 +68,11 @@ export class TreePanelEntry {
 					.node("div", "id=recordElement")
 				.close()
 
-				.node("div", "id=message", "class=hidden")
+				.node("div", "id=messageContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered hidden")
+				.open()
+					.node("div", "id=messageIndent", "class=cntr-override-prevent-size-change width-1")
+					.node("div", "id=message", "class=cntr-gap-small")
+				.close()
 
 				.node("div", "id=buttonsContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered hidden")
 				.open()
@@ -125,19 +129,21 @@ export class TreePanelEntry {
     }
 
 	handleErrorChange(error) {
-		this.toggleError(error);
+		this.toggleErrorMode(error);
 	}
 
-	async toggleError(error) {
+	async toggleErrorMode(error) {
 		if (error) {
 			this.component.get("message").setChild(error.message);
-			StyleSelectorAccessor.from(this.component.get("message")).disable("hidden");
-			this.toggleSpinner(false);
+			StyleSelectorAccessor.from(this.component.get("messageContainer")).disable("hidden");
+			await this.toggleSpinner(false);
+			await this.hideSubRecords();
+			this.expandToggle.toggle(false, true);
 			return;
-		} else {
-			this.component.get("message").clear();
-			StyleSelectorAccessor.from(this.component.get("message")).enable("hidden");
 		}
+
+		this.component.get("message").clear();
+		StyleSelectorAccessor.from(this.component.get("messageContainer")).enable("hidden");
 	}
 
     /**
@@ -268,12 +274,16 @@ export class TreePanelEntry {
 	 * @param {ContainerEvent} event 
 	 */
     async hideSubRecordsClicked(event) {
+		await this.hideSubRecords();
+    }
+
+	async hideSubRecords() {
 		await this.toggleChildElements(false);
 		await this.toggleSpinner(false);
 		await this.toggleButtons(false);
         this.component.get("subrecordElements").clear();
 		this.component.get("buttons").clear();
-    }
+	}
 
 }
 

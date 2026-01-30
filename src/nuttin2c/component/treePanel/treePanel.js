@@ -77,6 +77,7 @@ export class TreePanel {
 		this.treePanelEntry.toggleSpinner(true);
 		// Root element has no record
 		this.treePanelEntry.component.get("subrecordIndent").remove();
+		this.treePanelEntry.component.get("messageIndent").remove();
 		this.treePanelEntry.component.get("recordElementContainer").remove();
 
 	}
