@@ -61,12 +61,14 @@ export class TreePanelEntry {
 				.node("div", "id=recordElementContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered")
 				.open()
 					.node("div", "id=expandButton", "class=cntr-override-prevent-size-change")
-					.node("div", "class=cntr-override-shrink-only spinner-container-hidden", "id=message")
+					.node("div", "class=cntr-override-shrink-only spinner-container-hidden", "id=spinner")
 					.open()
 						.node("div", "class=spinner")
 					.close()
 					.node("div", "id=recordElement")
 				.close()
+
+				.node("div", "id=message", "class=hidden")
 
 				.node("div", "id=buttonsContainer", "class=cntr cntr-columns cntr-grow-only cntr-gap-small cntr-centered hidden")
 				.open()
@@ -123,7 +125,19 @@ export class TreePanelEntry {
     }
 
 	handleErrorChange(error) {
-		LOG.error(error);
+		this.toggleError(error);
+	}
+
+	async toggleError(error) {
+		if (error) {
+			this.component.get("message").setChild(error.message);
+			StyleSelectorAccessor.from(this.component.get("message")).disable("hidden");
+			this.toggleSpinner(false);
+			return;
+		} else {
+			this.component.get("message").clear();
+			StyleSelectorAccessor.from(this.component.get("message")).enable("hidden");
+		}
 	}
 
     /**
@@ -202,12 +216,12 @@ export class TreePanelEntry {
 	 */
 	async toggleSpinner(visible) {
 		if (visible) {
-			StyleSelectorAccessor.from(this.component.get("message")).disable("spinner-container-hidden");
-			StyleSelectorAccessor.from(this.component.get("message")).enable("spinner-container-visible");
+			StyleSelectorAccessor.from(this.component.get("spinner")).disable("spinner-container-hidden");
+			StyleSelectorAccessor.from(this.component.get("spinner")).enable("spinner-container-visible");
 			return;
 		}
-		StyleSelectorAccessor.from(this.component.get("message")).enable("spinner-container-hidden");
-		StyleSelectorAccessor.from(this.component.get("message")).disable("spinner-container-visible");
+		StyleSelectorAccessor.from(this.component.get("spinner")).enable("spinner-container-hidden");
+		StyleSelectorAccessor.from(this.component.get("spinner")).disable("spinner-container-visible");
 	}
 
 	/**
