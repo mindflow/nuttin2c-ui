@@ -269,7 +269,7 @@ export class FileUpload {
                 this.fileArrayState.clear();
             }
             for (const file of supportedFiles) {
-                addedFiles.push(await this.fileArrayState.update(file, file.name));
+                addedFiles.push(await this.fileArrayState.updateDomain(file, file.name));
                 if (this.multiple === false) {
                     break;
                 }
@@ -287,7 +287,7 @@ export class FileUpload {
     }
 
     fileAlreadySeleted(file) {
-        return this.fileArrayState.objectMap.has(file.name);
+        return this.fileArrayState.domainMap.has(file.name);
     }
 
     /**
@@ -363,7 +363,7 @@ export class FileUpload {
         const fileList = this.component.get("fileList");
         fileList.clear();
         this.events.trigger(FileUpload.EVENT_UPLOAD_RESET);
-        for (const file of this.fileArrayState.objectMap.values()) {
+        for (const file of this.fileArrayState.domainMap.values()) {
             const fileEntry = await this.fileUploadEntryProvider.get([file]);
             fileEntry.events.listenTo(FileUploadEntry.EVENT_REMOVE_CLICKED, this.removeFileEntry, this);
             this.fileArrayState.reactTo(file.name, new Method(fileEntry.updateProgress, fileEntry));
@@ -373,11 +373,11 @@ export class FileUpload {
     }
 
     checkFileUploadComplete() {
-        if (this.fileArrayState.objectMap.size === 0) {
+        if (this.fileArrayState.domainMap.size === 0) {
             this.events.trigger(FileUpload.EVENT_UPLOAD_RESET);
             return;
         }
-        for (const file of this.fileArrayState.objectMap.values()) {
+        for (const file of this.fileArrayState.domainMap.values()) {
             if (!file.uploadComplete) {
                 return;
             }
