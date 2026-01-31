@@ -12,6 +12,7 @@ import { Panel } from "../../panel/panel.js";
 import { RadioToggleIcon } from "../../input/radioToggleIcon/radioToggleIcon.js";
 import { ContainerEvent } from "containerbridge_v1";
 import { ToggleIcon } from "../../input/toggleIcon/toggleIcon.js";
+import { BannerLabel } from "../../bannerLabel/bannerLabel.js";
 
 const LOG = new Logger("TreePanelEntry");
 
@@ -44,6 +45,9 @@ export class TreePanelEntry {
 
 		/** @type {ToggleIcon} */
 		this.expandToggle = InjectionPoint.instance(ToggleIcon);
+
+		/** @type {BannerLabel} */
+		this.bannerLabel = InjectionPoint.instance(BannerLabel);
 
         /** @type {any} */
         this.record = record;
@@ -97,6 +101,10 @@ export class TreePanelEntry {
 
 		this.component.setChild("expandButton", this.expandToggle.component);
 
+		this.bannerLabel.events.listenTo(BannerLabel.EVENT_HIDDEN, this.hideMessage, this);
+
+		this.component.setChild("message", this.bannerLabel.component);
+
         this.arrayState.react(
 			new Method(this.handleDomainChange, this),
 			new Method(this.handleErrorChange,this));
@@ -134,15 +142,18 @@ export class TreePanelEntry {
 
 	async toggleErrorMode(error) {
 		if (error) {
-			this.component.get("message").setChild(error.message);
+			this.bannerLabel.showError(error.message);
 			StyleSelectorAccessor.from(this.component.get("messageContainer")).disable("hidden");
 			await this.toggleSpinner(false);
 			await this.hideSubRecords();
 			this.expandToggle.toggle(false, true);
 			return;
 		}
+		this.bannerLabel.hide();
+		await this.hideMessage();
+	}
 
-		this.component.get("message").clear();
+	async hideMessage() {
 		StyleSelectorAccessor.from(this.component.get("messageContainer")).enable("hidden");
 	}
 

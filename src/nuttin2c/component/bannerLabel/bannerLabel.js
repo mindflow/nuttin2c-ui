@@ -1,9 +1,13 @@
-import { CanvasStyles, ComponentBuilder, InlineComponentFactory, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
+import { CanvasStyles, ComponentBuilder, EventManager, InlineComponentFactory, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { CustomAppearance } from "../customAppearance.js";
 import { BannerLabelMessage } from "./bannerLabelMessage/bannerLabelMessage.js";
+import { ContainerAsync } from "containerbridge_v1";
 
 export class BannerLabel {
+
+    static EVENT_HIDDEN = "bannerLabelHidden";
+    static EVENT_SHOWN = "bannerLabelShown";
 
     constructor() {
         /** @type {InlineComponentFactory} */
@@ -30,10 +34,12 @@ export class BannerLabel {
 			.instance(BannerLabelMessage, ["", BannerLabelMessage.TYPE_ALERT, this.appearance]);
 
         this.isVisible = false;
+
+        /** @type {EventManager} */
+        this.events = new EventManager();
     }
 
     /**
-     * 
      * @param {StylesheetBuilder} stylesheetBuilder 
      * @returns {Stylesheet}
      */
@@ -124,24 +130,33 @@ export class BannerLabel {
      * @param {String} message 
      */
     hide() {
+        this.reset();
+        ContainerAsync.delay(600, () => {
+            this.events.trigger(BannerLabel.EVENT_HIDDEN);
+        });
+    }
+
+    reset() {
 		this.component.get("bannerLabel").setAttributeValue("class", "banner-label banner-label-hidden");
         this.active.hide();
         this.isVisible = false;
     }
 
     /**
-     * 
      * @param {BannerLabelMessage} banner
      * @param {String} header
      * @param {String} message
      */
      showBanner(banner, header, message) {
-        this.hide();
+        this.reset();
 		banner.setMessage(header, message);
         banner.show();
         this.component.get("bannerLabel").setAttributeValue("class", "banner-label banner-label-visible");
         this.isVisible = true;
 		this.active = banner;
+        ContainerAsync.delay(600, () => {
+            this.events.trigger(BannerLabel.EVENT_SHOWN);
+        });
     }
 }
 
