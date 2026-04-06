@@ -363,6 +363,7 @@ div.hiddenWidth {
 }
 
 .spinner-container-visible {
+    overflow: hidden;
     max-width: 200pt;
     opacity: 1;
     display: inline-block;
@@ -373,14 +374,16 @@ div.hiddenWidth {
 }
 
 .spinner-container-hidden {
+    overflow: hidden;
     max-width: 0pt;
     opacity: 0;
     display: inline-block;
-    height: 2.5em;
+    height: 0em;
     vertical-align: middle;
     visibility: hidden;
     transition:
         opacity 0.2s ease-in,
         max-width 0.2s ease-in-out,
-        visibility 0.2s ease-in-out;
+        visibility 0.2s ease-in-out,
+        height 0.3s ease-in-out;
 }

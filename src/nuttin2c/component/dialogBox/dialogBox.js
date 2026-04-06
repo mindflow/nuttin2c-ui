@@ -60,7 +60,7 @@ export class DialogBox {
      */
     static buildStylesheet(stylesheetBuilder) {
        return stylesheetBuilder
-            .media("@media (max-width: 500px)")
+            .media("@media (max-width: 516px)")
             .open()
                 .selector(".dialogbox-overlay")
                 .open()
@@ -87,10 +87,9 @@ export class DialogBox {
                 .selector(".dialogbox-body")
                 .open()
                     .style("overflow-y", "visible")
-                    .style("overflow-x", "hidden")
                 .close()
             .close()
-            .media("@media (min-width: 501px)")
+            .media("@media (min-width: 517px)")
             .open()
                 .selector(".dialogbox-overlay")
                 .open()
@@ -123,7 +122,6 @@ export class DialogBox {
                 .selector(".dialogbox-body")
                 .open()
                     .style("overflow-y", "visible")
-                    .style("overflow-x", "hidden")
                 .close()
 
                 .selector(".dialogbox-header")
