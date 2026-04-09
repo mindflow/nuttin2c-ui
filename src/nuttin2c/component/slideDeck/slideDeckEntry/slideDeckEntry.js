@@ -46,7 +46,7 @@ export class SlideDeckEntry {
         return stylesheetBuilder
             .selector(".slide-deck-entry")
             .open()
-                .style("box-shadow", "0px 0px 10px 10px #cccccc")
+                //.style("box-shadow", "0px 0px 10px 10px #cccccc")
                 .style("position", "relative")
                 .style("background-color", "#ffffff")
                 .style("grid-column", "1")

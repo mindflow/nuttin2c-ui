@@ -366,7 +366,6 @@ div.hiddenWidth {
     overflow: hidden;
     max-width: 200pt;
     opacity: 1;
-    display: inline-block;
     height: 2.5em;
     vertical-align: middle;
     visibility: visible;
@@ -377,7 +376,6 @@ div.hiddenWidth {
     overflow: hidden;
     max-width: 0pt;
     opacity: 0;
-    display: inline-block;
     height: 0em;
     vertical-align: middle;
     visibility: hidden;
