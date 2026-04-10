@@ -6,14 +6,12 @@ import { BaseElement,
     StylesheetBuilder,
     ComponentBuilder,
     Stylesheet,
-    InlineComponentFactory
+    InlineComponentFactory,
+    Css3StylesheetBuilder
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 export class SlideDeckEntry {
-
-    //static TEMPLATE_URL = "/assets/nuttin2c-ui/slideDeckEntry.html";
-    //static STYLES_URL = "/assets/nuttin2c-ui/slideDeckEntry.css";
 
     static DEFAULT_CLASS = "slide-deck-entry";
 
@@ -43,49 +41,36 @@ export class SlideDeckEntry {
      * @param {StylesheetBuilder} stylesheetBuilder 
      */
     static buildStylesheet(stylesheetBuilder) {
-        return stylesheetBuilder
+        return Css3StylesheetBuilder.create(stylesheetBuilder)
             .selector(".slide-deck-entry")
-            .open()
-                //.style("box-shadow", "0px 0px 10px 10px #cccccc")
-                .style("position", "relative")
-                .style("background-color", "#ffffff")
-                .style("grid-column", "1")
-                .style("grid-row", "1")
-                .style("width", "100%")
-                .style("height", "100%")
-                .style("min-height", "0")
-            .close()
+                .position("relative")
+                .backgroundColor("#ffffff")
+                .gridColumn("1")
+                .gridRow("1")
+                .width("100%")
+                .height("100%")
+                .minHeight("0")
 
             .selector(".slide-deck-entry.position-front")
-            .open()
-                .style("transform", "translate(0%, 0%)")
-                .style("transition", "transform .6s")
-            .close()
+                .transform("translate(0%, 0%)")
+                .transition("transform .6s")
 
             .selector(".slide-deck-entry.position-behind")
-            .open()
-                .style("transform", "translate(0%, 0%)")
-                .style("transition", "transform .6s")
-            .close()
+                .transform("translate(0%, 0%)")
+                .transition("transform .6s")
 
             .selector(".slide-deck-entry.position-right")
-            .open()
-                .style("transform", "translate(+105%, 0%)")
-                .style("transition", "transform .6s")
-            .close()
+                .transform("translate(+105%, 0%)")
+                .transition("transform .6s")
 
             .selector(".slide-deck-entry-content.existance-removed")
-            .open()
-                .style("display", "none")
-            .close()
+                .display("none")
 
             .selector(".slide-deck-entry-content.existance-present")
-            .open()
-                .style("position", "relative")
-                .style("height", "100%")
-            .close()
+                .position("relative")
+                .height("100%")
 
-            .build()
+            .build();
     }
 
     /**

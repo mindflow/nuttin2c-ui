@@ -3,7 +3,8 @@ import { CanvasStyles,
     Component,
     EventManager,
     StylesheetBuilder,
-    InlineComponentFactory
+    InlineComponentFactory,
+    Css3StylesheetBuilder
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { SlideDeckEntry } from "./slideDeckEntry/slideDeckEntry.js";
@@ -52,14 +53,13 @@ export class SlideDeck {
      * @returns 
      */
     static buildStylesheet(stylesheetBuilder) {
-        return stylesheetBuilder
+        return Css3StylesheetBuilder.create(stylesheetBuilder)
             .selector(".slide-deck")
-            .open()
-                .style("position", "relative")
-                .style("background-color", "#f1f1f1")
-                .style("display", "grid")
-                .style("height", "100%")
-            .close()
+                .position("relative")
+                .backgroundColor("#f1f1f1")
+                .display("grid")
+                .height("100%")
+
             .build();
     }
 
