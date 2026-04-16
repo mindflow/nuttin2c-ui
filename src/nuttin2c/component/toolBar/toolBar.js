@@ -1,4 +1,4 @@
-import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
+import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { CanvasStyles,
     Component,
     ComponentBuilder,
@@ -22,11 +22,14 @@ export class ToolBar {
         /** @type {EventManager} */
         this.eventManager = new EventManager();
 
-		/** @type {Button} */
+		/** @type {Provider<Button>} */
 		this.buttonProvider = InjectionPoint.provider(Button);
 
         /** @type {Array<Button>} */
         this.buttons = [];
+
+        /** @type {number} */
+        this.fillIndex = null;
     }
 
 	async postConfig() {
@@ -35,19 +38,24 @@ export class ToolBar {
 	}
 
     /**
-     * 
+     * @param {Number} fillIndex The index of the button that should be followed by a fill element. Starting with 0
+     */
+    setFillIndex(fillIndex) {
+        this.fillIndex = fillIndex;
+    }
+
+    /**
      * @param {String} label 
      * @param {String} type E.g. Button.TYPE_PRIMARY
-     * @param {boolean} fill Pushes the next buttons to the other end of the tool bar
      * @returns {Button}
      */
-    async addButton(label, type = Button.TYPE_PRIMARY, fill = false) {
+    async addButton(label, type = Button.TYPE_PRIMARY) {
         const button = await this.buttonProvider.get([label, type]);
 
         if (this.buttons.length > 0) {
             /** @type {SimpleElement} */
             const spacerDiv = HTML.custom("div");
-            const style = fill ? "tool-bar-fill" : "tool-bar-space";
+            const style = this.buttons.length-1 === this.fillIndex ? "tool-bar-fill" : "tool-bar-space";
             spacerDiv.setAttributeValue("class", style);
             this.component.addChild("buttonContainer", spacerDiv);
         }
