@@ -75,7 +75,7 @@ export class Button {
         stylesheetBuilder
             .selector(".button-outline")
             .open()
-                .style("display", "inline-block")
+                .style("display", "flex")
                 .style("vertical-align", "middle")
             .close()
             .selector(".button")

@@ -350,7 +350,6 @@ div.hiddenWidth {
 
 .spinner {
     margin: 0.5em;
-    display: inline-block;
     border-top: 0.2em solid rgba(128, 128, 128, 0.2);
     border-right: 0.2em solid rgba(128, 128, 128, 0.2);
     border-bottom: 0.2em solid rgba(128, 128, 128, 0.2);
@@ -384,4 +383,8 @@ div.hiddenWidth {
         max-width 0.2s ease-in-out,
         visibility 0.2s ease-in-out,
         height 0.3s ease-in-out;
+}
+
+.hidden {
+    display: none;
 }

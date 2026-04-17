@@ -53,15 +53,15 @@ export class SlideDeckEntry {
 
             .selector(".slide-deck-entry.position-front")
                 .transform("translate(0%, 0%)")
-                .transition("transform .6s")
+                .transition(["transform", ".6s"])
 
             .selector(".slide-deck-entry.position-behind")
                 .transform("translate(0%, 0%)")
-                .transition("transform .6s")
+                .transition(["transform", ".6s"])
 
             .selector(".slide-deck-entry.position-right")
                 .transform("translate(+105%, 0%)")
-                .transition("transform .6s")
+                .transition(["transform", ".6s"])
 
             .selector(".slide-deck-entry-content.existance-removed")
                 .display("none")

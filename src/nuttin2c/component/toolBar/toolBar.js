@@ -28,7 +28,7 @@ export class ToolBar {
         /** @type {Array<Button>} */
         this.buttons = [];
 
-        /** @type {number} */
+        /** @type {Number} */
         this.fillIndex = null;
     }
 

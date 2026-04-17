@@ -1,5 +1,5 @@
 import { Method, Logger } from "coreutil_v1";
-import { InputElementDataBinding, AbstractValidator, TemplateComponentFactory, CanvasStyles, Component, EventManager, InlineComponentFactory } from "nuttin2c-core_v1";
+import { InputElementDataBinding, AbstractValidator, TemplateComponentFactory, CanvasStyles, Component, EventManager, InlineComponentFactory, StyleAccessor, StyleSelectorAccessor } from "nuttin2c-core_v1";
 import { InjectionPoint } from "mindi_v1";
 import { CommonEvents } from "../common/commonEvents";
 import { ContainerEvent } from "containerbridge_v1";
@@ -76,8 +76,9 @@ export class CommonInput {
         CanvasStyles.enableStyle(this.componentClass.name, this.component.componentIndex);
 
         this.component.get(this.inputElementId).setAttributeValue("name", this.name);
-        if (this.placeholder) {
-            this.component.get(this.inputElementId).setAttributeValue("placeholder", ":  " +  this.placeholder);
+        if (this.placeholder && this.component.get("label")) {
+            StyleSelectorAccessor.from(this.component.get("label")).disable("hidden");
+            this.component.get("label").setChild(this.placeholder);
         }
 
         if(this.validator) {
