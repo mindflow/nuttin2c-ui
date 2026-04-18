@@ -108,6 +108,8 @@ export class PasswordMatcherInputControl extends CommonInput {
             .selector(".password-matcher-input-control-label")
                 .backgroundColor("#fff")
                 .position("absolute")
+                .padding("0", "0.25rem", "0", "0.25rem")
+                .borderRadius("0.5rem")
                 .top("-0.1rem")
                 .left("0.4rem")
                 .margin("0", null, "0.5rem", null)

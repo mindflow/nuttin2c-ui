@@ -107,6 +107,8 @@ export class TextInput extends CommonInput {
             .selector(".text-label")
                 .backgroundColor("#fff")
                 .position("absolute")
+                .padding("0", "0.25rem", "0", "0.25rem")
+                .borderRadius("0.5rem")
                 .top("-0.1rem")
                 .left("0.4rem")
                 .margin("0", null, "0.5rem", null)
@@ -131,7 +133,7 @@ export class TextInput extends CommonInput {
                     .text("Invalid value")
                     .node("i")
                 .close()
-                .node("label", "id=label", "class=text-label hidden", "for=textInput")
+                .node("label", "id=label", "class=text-label hidden")
                 .node("input", "id=textInput", "type=text", "class=text-input-entry")
             .close()
             .build();

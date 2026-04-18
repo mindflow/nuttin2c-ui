@@ -50,7 +50,9 @@ export class EmailInput extends CommonInput {
                 .backgroundClip("padding-box")
                 .border("1px", "solid", "#ced4da")
                 .borderRadius("0.25rem")
-                .transition(["border-color", "0.15s", null, "ease-in-out"], ["box-shadow", "0.15s", null, "ease-in-out"])
+                .transition(
+                    ["border-color", "0.15s", null, "ease-in-out"],
+                    ["box-shadow", "0.15s", null, "ease-in-out"])
                 .margin(null,null,"1rem",null)
 
             .selector(".email-input-error")
@@ -68,7 +70,11 @@ export class EmailInput extends CommonInput {
                 .cursor("pointer")
 
             .selector(".email-input-error-hidden")
-                .transition(["max-height", ".3s", ".2s"], ["padding", ".3s", ".2s"], ["opacity", ".2s", "0s"], ["visibility", "0s", ".2s"])
+                .transition(
+                    ["max-height", ".3s", ".2s"], 
+                    ["padding", ".3s", ".2s"], 
+                    ["opacity", ".2s", "0s"], 
+                    ["visibility", "0s", ".2s"])
                 .opacity("0")
                 .padding("0px","0px", null, null)
                 .maxHeight("0px")
@@ -76,7 +82,10 @@ export class EmailInput extends CommonInput {
                 .visibility("hidden")
 
             .selector(".email-input-error-visible")
-                .transition(["max-height", ".3s", "0s"], ["padding", ".2s", "0s"], ["opacity", ".2s", ".2s"])
+                .transition(
+                    ["max-height", ".3s", "0s"], 
+                    ["padding", ".2s", "0s"], 
+                    ["opacity", ".2s", ".2s"])
                 .opacity("1")
                 .padding("10px", "20px", "10px", "20px")
                 .maxHeight("50px")
@@ -106,6 +115,8 @@ export class EmailInput extends CommonInput {
             .selector(".email-label")
                 .backgroundColor("#fff")
                 .position("absolute")
+                .padding("0", "0.25rem", "0", "0.25rem")
+                .borderRadius("0.5rem")
                 .top("-0.1rem")
                 .left("0.4rem")
                 .margin("0", null, "0.5rem", null)

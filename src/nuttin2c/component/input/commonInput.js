@@ -76,9 +76,14 @@ export class CommonInput {
         CanvasStyles.enableStyle(this.componentClass.name, this.component.componentIndex);
 
         this.component.get(this.inputElementId).setAttributeValue("name", this.name);
-        if (this.placeholder && this.component.get("label")) {
-            StyleSelectorAccessor.from(this.component.get("label")).disable("hidden");
-            this.component.get("label").setChild(this.placeholder);
+
+        const label = this.component.get("label");
+        const input = this.component.get(this.inputElementId);
+
+        if (this.placeholder && label) {
+            label.setAttributeValue("for", input.getAttributeValue("id"));
+            label.setChild(this.placeholder);
+            StyleSelectorAccessor.from(label).disable("hidden");
         }
 
         if(this.validator) {
@@ -86,10 +91,10 @@ export class CommonInput {
         }
 
         if(this.model) {
-            this.dataBinding = InputElementDataBinding.link(this.model, this.validator).to(this.component.get(this.inputElementId));
+            this.dataBinding = InputElementDataBinding.link(this.model, this.validator).to(input);
         }
 
-        this.component.get(this.inputElementId)
+        input
             .listenTo("keyup", this.keyupped, this)
             .listenTo("change", this.changed, this)
             .listenTo("blur", this.blurred, this)
