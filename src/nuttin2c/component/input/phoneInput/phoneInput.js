@@ -23,8 +23,8 @@ export class PhoneInput extends CommonInput {
             model,
             new PhoneValidator(mandatory, !mandatory),
             placeholder,
-            "phoneInput",
-            "phoneError");
+            "Invalid phone number",
+            ["Must start with + sign", "followed by minimum 8 numbers"]);
     }
 
     /**
@@ -53,56 +53,6 @@ export class PhoneInput extends CommonInput {
                 .borderRadius("0.25rem")
                 .transition(["border-color", "0.15s", null, "ease-in-out"], ["box-shadow", "0.15s", null, "ease-in-out"])
                 .margin(null,null,"1rem",null)
-
-            .selector(".phone-input-error")
-                .width("fit-content")
-                .color("#333333")
-                .transform("translate(+5px,-5px)")
-                .backgroundColor("#FFFFE0")
-                .fontWeight("normal")
-                .fontSize("14px")
-                .borderRadius("8px")
-                .position("relative")
-                .zIndex("99999998")
-                .boxSizing("border-box")
-                .boxShadow("0", "1px", "8px", null, "rgba(0,0,0,0.5)")
-                .cursor("pointer")
-
-            .selector(".phone-input-error-hidden")
-                .transition(["max-height", ".3s", ".2s"], ["padding", ".3s", ".2s"], ["opacity", ".2s", "0s"], ["visibility", "0s", ".2s"])
-                .opacity("0")
-                .padding("0px","0px", null, null)
-                .maxHeight("0px")
-                .display("block")
-                .visibility("hidden")
-
-            .selector(".phone-input-error-visible")
-                .transition(["max-height", ".3s", "0s"], ["padding", ".2s", "0s"], ["opacity", ".2s", ".2s"])
-                .opacity("1")
-                .padding("10px", "20px", "10px", "20px")
-                .maxHeight("50px")
-                .display("block")
-                .visibility("visible")
-                .margin("10px", null, null, null)
-
-            .selector(".phone-input-error i")
-                .position("absolute")
-                .top("100%")
-                .left("30%")
-                .margin(null, null, null, "-15px")
-                .width("30px")
-                .height("15px")
-                .overflow("hidden")
-
-            .selector(".phone-input-error i::after")
-                .content("''")
-                .position("absolute")
-                .width("15px")
-                .height("15px")
-                .left("50%")
-                .transform("translate(-50%,-50%) rotate(45deg)")
-                .backgroundColor("#FFFFE0")
-                .boxShadow("0", "1px", "8px", null, "rgba(0,0,0,0.5)")
                 
             .selector(".phone-label")
                 .backgroundColor("#fff")
@@ -128,30 +78,13 @@ export class PhoneInput extends CommonInput {
         componentBuilder
             .root("div", "class=phone-input-container")
             .open()
-                .node("div", "id=phoneError", "class=phone-input-error phone-input-error-hidden")
-                .open()
-                    .text("Invalid phone number")
-                    .node("ul", "class=phone-matcher-input-value-crieria-list")
-                    .open()
-                        .node("li")
-                        .open()
-                            .text("Must start with + sign")
-                        .close()
-                        .node("li")
-                        .open()
-                            .text("followed by minimum 8 numbers")
-                        .close()
-                    .close()
-                    .node("i")
-                .close()
-                .node("label", "id=label", "class=phone-label hidden", "for=phoneInput")
-                .node("input", "id=phoneInput", "type=text", "class=phone-input-entry")
+                .node("div", "id=bubbleMessage")
+                .node("label", "id=label", "class=phone-label hidden")
+                .node("input", "id=input", "type=text", "class=phone-input-entry")
             .close();
         return componentBuilder.build();
     }
 
-    showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "phone-input-error phone-input-error-visible"); }
-    hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "phone-input-error phone-input-error-hidden"); }
 }
 
 TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PhoneInput));

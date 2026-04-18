@@ -16,10 +16,7 @@ export class HiddenInput extends CommonInput {
 
         super(HiddenInput,
             name,
-            model,
-            null,
-            null,
-            "hiddenInput");
+            model);
     }
 
     /**
@@ -41,7 +38,7 @@ export class HiddenInput extends CommonInput {
      */
     static buildComponent(componentBuilder) {
         return componentBuilder
-            .root("input", "id=hiddenInput", "type=hidden", "class=hidden-input-entry")
+            .root("input", "id=input", "type=hidden", "class=hidden-input-entry")
             .build();
     }
 

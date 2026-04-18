@@ -3,6 +3,8 @@ import { InputElementDataBinding, AbstractValidator, TemplateComponentFactory, C
 import { InjectionPoint } from "mindi_v1";
 import { CommonEvents } from "../common/commonEvents";
 import { ContainerEvent } from "containerbridge_v1";
+import { BannerMessage } from "../bannerMessage/bannerMessage.js";
+import { BubbleMessage } from "../bubbleMessage/bubbleMessage.js";
 
 const LOG = new Logger("CommonInput");
 
@@ -28,9 +30,9 @@ export class CommonInput {
         name,
         model = null,
         validator = null, 
-        placeholder = null,
-        inputElementId = null,
-        errorElementId = null) {
+        label = null,
+        errorMessage = "Invalid value",
+        errorMessageListItems = []) {
 
 
         /** @type {InlineComponentFactory} */
@@ -49,13 +51,7 @@ export class CommonInput {
         this.name = name;
 
         /** @type {string} */
-        this.placeholder = placeholder;
-
-        /** @type {string} */
-        this.inputElementId = inputElementId;
-
-        /** @type {string} */
-        this.errorElementId = errorElementId;
+        this.label = label;
 
         /** @type {object} */
         this.model = model;
@@ -68,6 +64,9 @@ export class CommonInput {
 
         /** @type {InputElementDataBinding} */
         this.dataBinding = null;
+
+        /** @type {BubbleMessage} */
+        this.bubbleMessage = InjectionPoint.instance(BubbleMessage, [errorMessage, errorMessageListItems]);
     }
 
     postConfig() {
@@ -75,19 +74,24 @@ export class CommonInput {
 
         CanvasStyles.enableStyle(this.componentClass.name, this.component.componentIndex);
 
-        this.component.get(this.inputElementId).setAttributeValue("name", this.name);
+        this.bubbleMessage.hide();
+
+        this.component.get("input").setAttributeValue("name", this.name);
+        if (this.component.get("bubbleMessage")) {
+            this.component.set("bubbleMessage", this.bubbleMessage.component);
+        }
 
         const label = this.component.get("label");
-        const input = this.component.get(this.inputElementId);
+        const input = this.component.get("input");
 
-        if (this.placeholder && label) {
+        if (this.label && label) {
             label.setAttributeValue("for", input.getAttributeValue("id"));
-            label.setChild(this.placeholder);
+            label.setChild(this.label);
             StyleSelectorAccessor.from(label).disable("hidden");
         }
 
-        if(this.validator) {
-            this.validator.withValidListener(new Method(this.hideValidationError, this));
+        if (this.validator) {
+            this.validator.withValidListener(new Method(this.bubbleMessage.hide, this.bubbleMessage));
         }
 
         if(this.model) {
@@ -105,9 +109,8 @@ export class CommonInput {
                 }
             }, this);
 
-        if (this.errorElementId) {
-            this.component.get(this.errorElementId)
-                .listenTo("click", this.errorClicked, this);
+        if (this.component.get("bubbleMessage")) {
+            this.component.get("bubbleMessage").listenTo("click", this.errorClicked, this);
         }
     }
 
@@ -115,13 +118,13 @@ export class CommonInput {
 
     get value() { 
         /** @type {HTMLInputElement} */
-        const input = this.component.get(this.inputElementId);
+        const input = this.component.get("input");
         return input.value;
     }
 
     set value(value) {
         /** @type {HTMLInputElement} */
-        const input = this.component.get(this.inputElementId);
+        const input = this.component.get("input");
         input.value = value;
         if (this.dataBinding) {
             this.dataBinding.push();
@@ -160,7 +163,7 @@ export class CommonInput {
 
     entered(event) {
         if (!this.validator.isValid()) {
-            this.showValidationError();
+            this.bubbleMessage.show();
             this.selectAll();
             return;
         }
@@ -172,21 +175,21 @@ export class CommonInput {
             return;
         }
         if (!this.validator.isValid()) {
-            this.showValidationError();
+            this.bubbleMessage.show();
             return;
         }
-        this.hideValidationError();
+        this.bubbleMessage.hide();
         this.events.trigger(CommonInput.EVENT_BLURRED, event);
     }
 
     errorClicked(event) {
-        this.hideValidationError();
+        this.bubbleMessage.hide();
     }
 
-    focus() { this.component.get(this.inputElementId).focus(); }
-    selectAll() { this.component.get(this.inputElementId).selectAll(); }
-    enable() { this.component.get(this.inputElementId).enable(); }
-    disable() { this.component.get(this.inputElementId).disable(); }
-    clear() { this.component.get(this.inputElementId).value = ""; this.tainted = false; this.hideValidationError(); }
+    focus() { this.component.get("input").focus(); }
+    selectAll() { this.component.get("input").selectAll(); }
+    enable() { this.component.get("input").enable(); }
+    disable() { this.component.get("input").disable(); }
+    clear() { this.component.get("input").value = ""; this.tainted = false; this.bubbleMessage.hide(); }
 
 }

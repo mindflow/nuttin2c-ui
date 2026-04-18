@@ -7,28 +7,26 @@ const LOG = new Logger("PasswordInput");
 
 export class PasswordInput extends CommonInput {
 
-    static DEFAULT_PLACEHOLDER = "Password";
+    static DEFAULT_LABEL = "Password";
 
     /**
      * 
      * @param {string} name
      * @param {object} model
-     * @param {string} placeholder
+     * @param {string} label
      * @param {boolean} mandatory
      */
-    constructor(name, model = null, placeholder = TextInput.DEFAULT_PLACEHOLDER, mandatory = false) {
+    constructor(name, model = null, label = PasswordInput.DEFAULT_LABEL, mandatory = false) {
 
         super(PasswordInput,
             name,
             model,
             new RequiredValidator(!mandatory),
-            placeholder,
-            "passwordInput",
-            "passwordError");
+            label,
+            "Password required");
     }
 
     /**
-     * 
      * @param {StylesheetBuilder} stylesheetBuilder 
      * @returns {Stylesheet}
      */
@@ -128,19 +126,13 @@ export class PasswordInput extends CommonInput {
         return componentBuilder
             .root("div", "class=password-input-container")
             .open()
-                .node("div", "id=passwordError", "class=password-input-error password-input-error-hidden")
-                .open()
-                    .text("Password required")
-                    .node("i")
-                .close()
-                .node("label", "id=label", "class=password-label hidden", "for=passwordInput")
-                .node("input", "id=passwordInput", "type=password", "class=password-input-entry")
+                .node("div", "id=bubbleMessage")
+                .node("label", "id=label", "class=password-label hidden")
+                .node("input", "id=input", "type=password", "class=password-input-entry")
             .close()
             .build();
     }
 
-    showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "email-input-error email-input-error-visible"); }
-    hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "email-input-error email-input-error-hidden"); }
 }
 
 TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(PasswordInput));

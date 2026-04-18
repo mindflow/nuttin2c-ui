@@ -7,24 +7,23 @@ const LOG = new Logger("TextInput");
 
 export class NumberInput extends CommonInput {
 
-    static DEFAULT_PLACEHOLDER = "Number";
+    static DEFAULT_LABEL = "Number";
 
     /**
      * 
      * @param {string} name
      * @param {object} model
-     * @param {string} placeholder
+     * @param {string} label
      * @param {boolean} mandatory
      */
-    constructor(name, model = null, placeholder = NumberInput.DEFAULT_PLACEHOLDER, mandatory = false) {
+    constructor(name, model = null, label = NumberInput.DEFAULT_LABEL, mandatory = false) {
 
         super(NumberInput,
             name,
             model,
             new NumberValidator(mandatory, !mandatory),
-            placeholder,
-            "numberInput",
-            "numberError");
+            label,
+            "Invalid value");
     }
 
     /**
@@ -53,56 +52,6 @@ export class NumberInput extends CommonInput {
                 .borderRadius("0.25rem")
                 .transition(["border-color", "0.15s", null, "ease-in-out"], ["box-shadow", "0.15s", null, "ease-in-out"])
                 .margin(null,null,"1rem",null)
-
-            .selector(".number-input-error")
-                .width("fit-content")
-                .color("#333333")
-                .transform("translate(+5px,-5px)")
-                .backgroundColor("#FFFFE0")
-                .fontWeight("normal")
-                .fontSize("14px")
-                .borderRadius("8px")
-                .position("relative")
-                .zIndex("99999998")
-                .boxSizing("border-box")
-                .boxShadow("0", "1px", "8px", null, "rgba(0,0,0,0.5)")
-                .cursor("pointer")
-
-            .selector(".number-input-error-hidden")
-                .transition(["max-height", ".3s", ".2s"], ["padding", ".3s", ".2s"], ["opacity", ".2s", "0s"], ["visibility", "0s", ".2s"])
-                .opacity("0")
-                .padding("0px","0px", null, null)
-                .maxHeight("0px")
-                .display("block")
-                .visibility("hidden")
-
-            .selector(".number-input-error-visible")
-                .transition(["max-height", ".3s", "0s"], ["padding", ".2s", "0s"], ["opacity", ".2s", ".2s"])
-                .opacity("1")
-                .padding("10px", "20px", "10px", "20px")
-                .maxHeight("50px")
-                .display("block")
-                .visibility("visible")
-                .margin("10px", null, null, null)
-
-            .selector(".number-input-error i")
-                .position("absolute")
-                .top("100%")
-                .left("30%")
-                .margin(null, null, null, "-15px")
-                .width("30px")
-                .height("15px")
-                .overflow("hidden")
-
-            .selector(".number-input-error i::after")
-                .content("''")
-                .position("absolute")
-                .width("15px")
-                .height("15px")
-                .left("50%")
-                .transform("translate(-50%,-50%) rotate(45deg)")
-                .backgroundColor("#FFFFE0")
-                .boxShadow("0", "1px", "8px", null, "rgba(0,0,0,0.5)")
                 
             .selector(".number-label")
                 .backgroundColor("#fff")
@@ -128,19 +77,12 @@ export class NumberInput extends CommonInput {
         return componentBuilder
             .root("div", "class=number-input-container")
             .open()
-                .node("div", "id=numberError", "class=number-input-error number-input-error-hidden")
-                .open()
-                    .text("Invalid value")
-                    .node("i")
-                .close()
-                .node("label", "id=label", "class=number-label hidden", "for=numberInput")
-                .node("input", "id=numberInput", "type=number", "pattern=[0-9]*", "inputmode=numeric", "class=number-input-entry")
+                .node("div", "id=bubbleMessage")
+                .node("label", "id=label", "class=number-label hidden")
+                .node("input", "id=input", "type=number", "pattern=[0-9]*", "inputmode=numeric", "class=number-input-entry")
             .close()
             .build();
     }
-
-    showValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "number-input-error number-input-error-visible"); }
-    hideValidationError() { this.component.get(this.errorElementId).setAttributeValue("class", "number-input-error number-input-error-hidden"); }
 }
 
 TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(NumberInput));

@@ -193,6 +193,7 @@ export class BannerMessage {
 
     postConfig() {
         this.component = this.componentFactory.create(BannerMessage);
+        CanvasStyles.enableStyle(BannerMessage.name);
         this.component.get("bannerMessageHeader").setChild("Alert");
         this.component.get("bannerMessageMessage").setChild(this.message);
         this.applyClasses("banner-message fade");
