@@ -50,7 +50,9 @@ export class TextInput extends CommonInput {
                 .backgroundClip("padding-box")
                 .border("1px", "solid", "#ced4da")
                 .borderRadius("0.25rem")
-                .transition(["border-color", "0.15s", null, "ease-in-out"], ["box-shadow", "0.15s", null, "ease-in-out"])
+                .transition(
+                    ["border-color", "0.15s", null, "ease-in-out"], 
+                    ["box-shadow", "0.15s", null, "ease-in-out"])
                 .margin(null,null,"1rem",null)
                 
             .selector(".text-label")

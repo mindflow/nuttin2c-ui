@@ -8,9 +8,14 @@ import { CanvasStyles,
     Stylesheet,
     StylesheetBuilder,
     ComponentBuilder,
-    InlineComponentFactory
+    InlineComponentFactory,
+    Css3StylesheetBuilder,
+    RequiredValidator,
+    StyleSelectorAccessor
 } from "nuttin2c-core_v1";
-import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
+import { InjectionPoint,
+    PrototypeConfig,
+    TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
 
 const LOG = new Logger("Select");
@@ -26,10 +31,10 @@ export class Select {
      * @param {string} name 
      * @param {object} model
      * @param {Array<OptionElement>} options
-     * @param {string} placeholder
+     * @param {string} label
      * @param {boolean} mandatory
      */
-    constructor(name, model = null, options = [], placeholder = Select.DEFAULT_PLACEHOLDER, mandatory = false) {
+    constructor(name, model = null, options = [], label = Select.DEFAULT_PLACEHOLDER, mandatory = false) {
         
         /** @type {InlineComponentFactory} */
         this.componentFactory = InjectionPoint.instance(InlineComponentFactory);
@@ -47,7 +52,7 @@ export class Select {
         this.optionsArray = options;
 
         /** @type {string} */
-        this.placeholder = placeholder;
+        this.label = label;
 
         /** @type {boolean} */
         this.mandatory = mandatory;
@@ -55,99 +60,110 @@ export class Select {
         /** @type {object} */
         this.model = model;
 
+        /** @type {RequiredValidator} */
+        this.validator = new RequiredValidator(false, mandatory);
+
     }
 
     /**
-     * 
      * @param {StylesheetBuilder} stylesheetBuilder 
      * @returns {Stylesheet}
      */
     static buildStylesheet(stylesheetBuilder) {
-       stylesheetBuilder
-            .selector(".select-entry")
-            .open()
-                .style("display", "block")
-                .style("width", "100%")
-                .style("height", "calc(1.5em + 0.75rem + 2px)")
-                .style("padding", "0.375rem 0.75rem")
-                .style("font-size", "1rem")
-                .style("font-weight", "400")
-                .style("line-height", "1.5")
-                .style("color", "#495057")
-                .style("background-color", "#fff")
-                .style("background-clip", "padding-box")
-                .style("border", "1pt solid #ced4da")
-                .style("border-radius", "0.25rem")
-                .style("transition", "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out")
-                .style("margin-bottom", "1rem")
-                .style("appearance", "none")
-                .style("-webkit-appearance", "none")
-                .style("-moz-appearance", "none")
-                .style("background-image", "url(\"data:image/svg+xml;utf8,<svg fill='2196F3' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>\")")
-                .style("background-repeat", "no-repeat")
-                .style("background-position", "right 0.75rem center")
-                .style("background-size", "1.5em")
-            .close()
+        Css3StylesheetBuilder.create(stylesheetBuilder)
+            .selector(".select-container")
+                .position("relative")
+                .padding("0.5rem")
 
+            .selector(".select-entry")
+                .display("block")
+                .width("100%")
+                .height("calc(1.5em + 1rem + 2px)")
+                .padding("0.7rem", "0.75rem", "0.3rem", "0.75rem")
+                .fontSize("1rem")
+                .fontWeight("400")
+                .lineHeight("1.5")
+                .color("#495057")
+                .backgroundColor("#fff")
+                .backgroundClip("padding-box")
+                .border("1pt", "solid", "#ced4da")
+                .borderRadius("0.25rem")
+                .transition(
+                    ["border-color", "0.15s", null, "ease-in-out"],
+                    ["box-shadow", "0.15s", null, "ease-in-out"])
+                .margin(null, null, "1rem", null)
+                .appearance("none")
+                .backgroundImage("url(\"data:image/svg+xml;utf8,<svg fill='2196F3' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>\")")
+                .backgroundRepeat("no-repeat")
+                .backgroundPosition("right 0.75rem center")
+                .backgroundSize("1.5em")
+            
             .selector(".select-error")
-            .open()
-                .style("width", "fit-content")
-                .style("color", "#333333")
-                .style("transform", "translate(+5px,-5px)")
-                .style("background-color", "#FFFFE0")
-                .style("font-weight", "normal")
-                .style("font-size", "14px")
-                .style("border-radius", "8px")
-                .style("position", "relative")
-                .style("z-index", "99999998")
-                .style("box-sizing", "border-box")
-                .style("box-shadow", "0 1pt 8pt rgba(0,0,0,0.5)")
-                .style("cursor", "pointer")
-            .close()
+                .width("fit-content")
+                .color("#333333")
+                .transform("translate(+5px,-5px)")
+                .backgroundColor("#FFFFE0")
+                .fontWeight("normal")
+                .fontSize("14px")
+                .borderRadius("8px")
+                .position("relative")
+                .zIndex("99999998")
+                .boxSizing("border-box")
+                .boxShadow("0", "1pt", "8pt", null, "rgba(0,0,0,0.5)")
+                .cursor("pointer")
 
             .selector(".select-error-hidden")
-            .open()
-                .style("transition", "max-height .3s .2s, padding .3s .2s, opacity .2s 0s, visibility 0s .2s")
-                .style("opacity", "0")
-                .style("padding", "0px 0px")
-                .style("max-height", "0px")
-                .style("display", "block")
-                .style("visibility", "hidden")
-            .close()
+                .transition(["max-height", ".3s", ".2s"],
+                     ["padding", ".3s", ".2s"],
+                     ["opacity", ".2s", "0s"],
+                     ["visibility", "0s", ".2s"])
+                .opacity("0")
+                .padding("0px", "0px", "0px", "0px")
+                .maxHeight("0px")
+                .display("block")
+                .visibility("hidden")
 
             .selector(".select-error-visible")
-            .open()
-                .style("transition", "max-height .3s, padding .2s, opacity .2s .2s")
-                .style("opacity", "1")
-                .style("padding", "10px 20px")
-                .style("max-height", "50px")
-                .style("display", "block")
-                .style("visibility", "visible")
-                .style("margin-top", "10px")
-            .close()
+                .transition(["max-height", ".3s", null],
+                     ["padding", ".2s", null],
+                     ["opacity", ".2s", ".2s"])
+                .opacity("1")
+                .padding("10px", "20px", "10px", "20px")
+                .maxHeight("50px")
+                .display("block")
+                .visibility("visible")
+                .margin("10px", null, null, null)
 
             .selector(".select-error i")
-            .open()
-                .style("position", "absolute")
-                .style("top", "100%")
-                .style("left", "30%")
-                .style("margin-left", "-15pt")
-                .style("width", "30pt")
-                .style("height", "15pt")
-                .style("overflow", "hidden")
-            .close()
+                .position("absolute")
+                .top("100%")
+                .left("30%")
+                .margin(null, null, null, "-15pt")
+                .width("30pt")
+                .height("15pt")
+                .overflow("hidden")
 
             .selector(".select-error i::after")
-            .open()
-                .style("content", "''")
-                .style("position", "absolute")
-                .style("width", "15pt")
-                .style("height", "15pt")
-                .style("left", "50%")
-                .style("transform", "translate(-50%,-50%) rotate(45deg)")
-                .style("background-color", "#FFFFE0")
-                .style("box-shadow", "0 1pt 8pt rgba(0,0,0,0.5)")
-            .close();
+                .content("''")
+                .position("absolute")
+                .width("15pt")
+                .height("15pt")
+                .left("50%")
+                .transform("translate(-50%,-50%) rotate(45deg)")
+                .backgroundColor("#FFFFE0")
+                .boxShadow("0", "1pt", "8pt", null, "rgba(0,0,0,0.5)")
+                
+            .selector(".select-label")
+                .backgroundColor("#fff")
+                .position("absolute")
+                .padding("0", "0.25rem", "0", "0.25rem")
+                .borderRadius("0.5rem")
+                .top("-0.1rem")
+                .left("0.4rem")
+                .margin("0", null, "0.5rem", null)
+                .fontSize("0.9rem")
+                .fontWeight("bold")
+                .color("#8a8a8a");
 
         return stylesheetBuilder.build();
     }
@@ -159,15 +175,13 @@ export class Select {
      */
     static buildComponent(componentBuilder) {
         return componentBuilder
-            .root("div")
+            .root("div", "class=select-container")
             .open()
-                .node("div", "id=selectError", "class=select-error select-error-hidden")
-                .open()
-                    .text("Invalid selection")
-                    .node("i")
-                .close()
+                .node("div", "id=bubbleMessage")
+                .node("label", "id=label", "class=select-label hidden")
                 .node("select", "id=select", "class=select-entry")
-            .close();
+            .close()
+        .build();
     }
 
     postConfig() {
@@ -178,6 +192,14 @@ export class Select {
 		const select = this.component.get("select");
 
         select.name = this.name;
+
+        const label = this.component.get("label");
+
+        if (this.label && label) {
+            label.setAttributeValue("for", select.getAttributeValue("id"));
+            label.setChild(this.label);
+            StyleSelectorAccessor.from(label).disable("hidden");
+        }
 
         if (this.model) {
             InputElementDataBinding.link(this.model).to(this.component.get("select"));
