@@ -113,10 +113,11 @@ export class Select {
                 .cursor("pointer")
 
             .selector(".select-error-hidden")
-                .transition(["max-height", ".3s", ".2s"],
-                     ["padding", ".3s", ".2s"],
-                     ["opacity", ".2s", "0s"],
-                     ["visibility", "0s", ".2s"])
+                .transition(
+                    ["max-height", ".3s", ".2s"],
+                    ["padding", ".3s", ".2s"],
+                    ["opacity", ".2s", "0s"],
+                    ["visibility", "0s", ".2s"])
                 .opacity("0")
                 .padding("0px", "0px", "0px", "0px")
                 .maxHeight("0px")
@@ -124,9 +125,10 @@ export class Select {
                 .visibility("hidden")
 
             .selector(".select-error-visible")
-                .transition(["max-height", ".3s", null],
-                     ["padding", ".2s", null],
-                     ["opacity", ".2s", ".2s"])
+                .transition(
+                    ["max-height", ".3s", null],
+                    ["padding", ".2s", null],
+                    ["opacity", ".2s", ".2s"])
                 .opacity("1")
                 .padding("10px", "20px", "10px", "20px")
                 .maxHeight("50px")
