@@ -17,6 +17,7 @@ import { InjectionPoint,
     PrototypeConfig,
     TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
+import { SelectOptionsSource } from "./selectOptionsSource";
 
 const LOG = new Logger("Select");
 
@@ -30,11 +31,11 @@ export class Select {
      * 
      * @param {string} name 
      * @param {object} model
-     * @param {Array<OptionElement>} options
      * @param {string} label
      * @param {boolean} mandatory
+     * @param {SelectOptionsSource} optionsSource
      */
-    constructor(name, model = null, options = [], label = Select.DEFAULT_PLACEHOLDER, mandatory = false) {
+    constructor(name, model = null, label = Select.DEFAULT_PLACEHOLDER, mandatory = false, optionsSource = new SelectOptionsSource()) {
         
         /** @type {InlineComponentFactory} */
         this.componentFactory = InjectionPoint.instance(InlineComponentFactory);
@@ -48,8 +49,8 @@ export class Select {
         /** @type {string} */
         this.name = name;
 
-        /** @type {Array<OptionElement>} */
-        this.optionsArray = options;
+        /** @type {SelectOptionsSource} */
+        this.optionsSource = optionsSource;
 
         /** @type {string} */
         this.label = label;
@@ -190,12 +191,11 @@ export class Select {
         this.component = this.componentFactory.create(Select);
         CanvasStyles.enableStyle(Select.name);
 
+        const label = this.component.get("label");
+
 		/** @type {SelectElement} */
 		const select = this.component.get("select");
-
         select.name = this.name;
-
-        const label = this.component.get("label");
 
         if (this.label && label) {
             label.setAttributeValue("for", select.getAttributeValue("id"));
@@ -203,29 +203,31 @@ export class Select {
             StyleSelectorAccessor.from(label).disable("hidden");
         }
 
+		this.optionsSource.events.listenTo(SelectOptionsSource.EVENT_OPTIONS_CHANGED, this.handleOptionsChange, this);
+        this.optionsSource.refresh();
+
         if (this.model) {
             InputElementDataBinding.link(this.model).to(this.component.get("select"));
         }
 
-		if (this.optionsArray && this.optionsArray.length > 0) {
-			select.options = this.optionsArray;
-		}
-
         select.listenTo("click", this.clicked, this);
     }
 
+    /**
+     * 
+     * @param {Array<OptionElement>} optionsArray 
+     */
+    handleOptionsChange(optionsArray) {
+        /** @type {SelectElement} */
+        const select = this.component.get("select");
+        select.options = optionsArray;
+    }
+
 	/**
-	 * @param {Array<OptionElement>} optionsArray
+	 * @param {Map<String, String>} keyValueOptions
 	 */
-	set options(optionsArray) {
-		this.optionsArray = optionsArray;
-		if (this.component) {
-			/** @type {SelectElement} */
-			const select = this.component.get("select");
-			if (select && this.optionsArray && this.optionsArray.length > 0) {
-				select.options = this.optionsArray;
-			}
-		}
+	set options(keyValueOptions) {
+		this.optionsSource.update(keyValueOptions);
 	}
 
     clicked(event) {
