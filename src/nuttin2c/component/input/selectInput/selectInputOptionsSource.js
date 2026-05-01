@@ -1,6 +1,6 @@
 import { EventManager, OptionElement } from "nuttin2c-core_v1";
 
-export class SelectOptionsSource {
+export class SelectInputOptionsSource {
     
     static EVENT_OPTIONS_CHANGED = "optionsChanged";
 
@@ -33,11 +33,11 @@ export class SelectOptionsSource {
             optionsArray.push({"label": value, "value": key });
         });
         this.options = optionsArray;
-        this.events.trigger(SelectOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
+        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
     }
 
     refresh() {
-        this.events.trigger(SelectOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
+        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
     }
 
 }

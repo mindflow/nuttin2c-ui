@@ -17,15 +17,16 @@ import { InjectionPoint,
     PrototypeConfig,
     TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
-import { SelectOptionsSource } from "./selectOptionsSource";
+import { SelectInputOptionsSource } from "./selectInputOptionsSource";
 
-const LOG = new Logger("Select");
+const LOG = new Logger("SelectInput");
 
-export class Select {
+export class SelectInput {
 
 	static DEFAULT_PLACEHOLDER = "Select";
 
 	static EVENT_CLICKED = CommonEvents.CLICKED;
+    static EVENT_CHANGED = CommonEvents.CHANGED;
 
     /**
      * 
@@ -33,9 +34,9 @@ export class Select {
      * @param {object} model
      * @param {string} label
      * @param {boolean} mandatory
-     * @param {SelectOptionsSource} optionsSource
+     * @param {SelectInputOptionsSource} optionsSource
      */
-    constructor(name, model = null, label = Select.DEFAULT_PLACEHOLDER, mandatory = false, optionsSource = new SelectOptionsSource()) {
+    constructor(name, model = null, label = SelectInput.DEFAULT_PLACEHOLDER, mandatory = false, optionsSource = new SelectInputOptionsSource()) {
         
         /** @type {InlineComponentFactory} */
         this.componentFactory = InjectionPoint.instance(InlineComponentFactory);
@@ -49,7 +50,7 @@ export class Select {
         /** @type {string} */
         this.name = name;
 
-        /** @type {SelectOptionsSource} */
+        /** @type {SelectInputOptionsSource} */
         this.optionsSource = optionsSource;
 
         /** @type {string} */
@@ -188,14 +189,17 @@ export class Select {
     }
 
     postConfig() {
-        this.component = this.componentFactory.create(Select);
-        CanvasStyles.enableStyle(Select.name);
+        this.component = this.componentFactory.create(SelectInput);
+        CanvasStyles.enableStyle(SelectInput.name);
 
+        
         const label = this.component.get("label");
 
 		/** @type {SelectElement} */
 		const select = this.component.get("select");
         select.name = this.name;
+        select.listenTo("click", this.clicked, this);
+        select.listenTo("change", this.changed, this);
 
         if (this.label && label) {
             label.setAttributeValue("for", select.getAttributeValue("id"));
@@ -203,14 +207,12 @@ export class Select {
             StyleSelectorAccessor.from(label).disable("hidden");
         }
 
-		this.optionsSource.events.listenTo(SelectOptionsSource.EVENT_OPTIONS_CHANGED, this.handleOptionsChange, this);
+		this.optionsSource.events.listenTo(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, this.handleOptionsChange, this);
         this.optionsSource.refresh();
 
-        if (this.model) {
-            InputElementDataBinding.link(this.model).to(this.component.get("select"));
+        if(this.model) {
+            this.dataBinding = InputElementDataBinding.link(this.model, this.validator).to(this.component.get("select"));
         }
-
-        select.listenTo("click", this.clicked, this);
     }
 
     /**
@@ -221,6 +223,9 @@ export class Select {
         /** @type {SelectElement} */
         const select = this.component.get("select");
         select.options = optionsArray;
+        if (this.dataBinding) {
+            this.dataBinding.push();
+        }
     }
 
 	/**
@@ -228,12 +233,20 @@ export class Select {
 	 */
 	set options(keyValueOptions) {
 		this.optionsSource.update(keyValueOptions);
+        if (this.dataBinding) {
+            this.dataBinding.push();
+        }
 	}
 
     clicked(event) {
-        this.events.trigger(Select.EVENT_CLICKED, [event]);
+        this.events.trigger(SelectInput.EVENT_CLICKED, [event]);
+    }
+
+    changed(event) {
+		const select = this.component.get("select");
+        this.events.trigger(SelectInput.EVENT_CHANGED, [event]);
     }
 
 }
 
-TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(Select));
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SelectInput));
