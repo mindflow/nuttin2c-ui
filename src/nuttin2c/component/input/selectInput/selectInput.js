@@ -27,6 +27,7 @@ export class SelectInput {
 
 	static EVENT_CLICKED = CommonEvents.CLICKED;
     static EVENT_CHANGED = CommonEvents.CHANGED;
+    static EVENT_LOADED = CommonEvents.INPUT;
 
     /**
      * 
@@ -243,7 +244,6 @@ export class SelectInput {
     }
 
     changed(event) {
-		const select = this.component.get("select");
         this.events.trigger(SelectInput.EVENT_CHANGED, [event]);
     }
 

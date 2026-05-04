@@ -14,6 +14,8 @@ export class CommonEvents {
     static ENABLED = "enabled";
     static DISABLED = "disabled";
     static SELECTED = "selected";
+    static INPUT = "input";
+    static LOADED = "loaded";
 
     static DRAG_STARTED = "dragStarted";
     static DRAG_ENDED = "dragEnded";
