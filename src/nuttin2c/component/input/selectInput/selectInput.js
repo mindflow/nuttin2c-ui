@@ -98,7 +98,7 @@ export class SelectInput {
                 .appearance("none")
                 .backgroundImage("url(\"data:image/svg+xml;utf8,<svg fill='2196F3' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>\")")
                 .backgroundRepeat("no-repeat")
-                .backgroundPosition("right 0.75rem center")
+                .backgroundPosition("right 0.75rem top 0.3rem")
                 .backgroundSize("1.5em")
             
             .selector(".select-error")
