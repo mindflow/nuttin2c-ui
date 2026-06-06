@@ -247,6 +247,11 @@ export class SelectInput {
         this.events.trigger(SelectInput.EVENT_CHANGED, [event]);
     }
 
+    focus() { this.component.get("select").focus(); }
+    enable() { this.component.get("select").enable(); }
+    disable() { this.component.get("select").disable(); }
+    clear() { this.component.get("select").value = ""; }
+
 }
 
 TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SelectInput));
