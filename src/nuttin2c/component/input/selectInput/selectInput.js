@@ -28,6 +28,7 @@ export class SelectInput {
 	static EVENT_CLICKED = CommonEvents.CLICKED;
     static EVENT_CHANGED = CommonEvents.CHANGED;
     static EVENT_LOADED = CommonEvents.INPUT;
+    static EVENT_BLURRED = CommonEvents.BLURRED;
 
     /**
      * 
@@ -201,6 +202,7 @@ export class SelectInput {
         select.name = this.name;
         select.listenTo("click", this.clicked, this);
         select.listenTo("change", this.changed, this);
+        select.listenTo("blur", this.blurred, this);
 
         if (this.label && label) {
             label.setAttributeValue("for", select.getAttributeValue("id"));
@@ -245,6 +247,10 @@ export class SelectInput {
 
     changed(event) {
         this.events.trigger(SelectInput.EVENT_CHANGED, [event]);
+    }
+
+    blurred(event) {
+        this.events.trigger(SelectInput.EVENT_BLURRED, [event]);
     }
 
     focus() { this.component.get("select").focus(); }
