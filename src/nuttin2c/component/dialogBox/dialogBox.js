@@ -261,7 +261,7 @@ export class DialogBox {
                 .style("display", "-ms-flexbox")
                 .style("display", "flex")
                 .style("background-color", "#999999")
-                .style("color", "#ffffff")
+                .style("color", "var(--default-panel-color)")
                 .style("-ms-flex-align", "start")
                 .style("align-items", "flex-start")
                 .style("-ms-flex-pack", "justify")

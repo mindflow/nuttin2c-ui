@@ -6,7 +6,9 @@ import {
     StylesheetBuilder,
     Stylesheet,
     ComponentBuilder,
-    InlineComponentFactory
+    InlineComponentFactory,
+    Css3StylesheetBuilder,
+    StyleSelectorAccessor
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { Logger } from "coreutil_v1";
@@ -24,8 +26,9 @@ export class ExpandChevron {
     /**
      * 
      * @param {object} model
+     * @param {string} size
      */
-    constructor(model = null) {
+    constructor(model = null, size = "medium") {
         
         /** @type {InlineComponentFactory} */
         this.componentFactory = InjectionPoint.instance(InlineComponentFactory);
@@ -42,6 +45,9 @@ export class ExpandChevron {
         /** @type {boolean} */
         this.expanded = false;
 
+        /** @type {string} */
+        this.size = size;
+
     }
 
     /**
@@ -50,51 +56,38 @@ export class ExpandChevron {
      * @returns {Stylesheet}
      */
     static buildStylesheet(stylesheetBuilder) {
-       stylesheetBuilder
+        const css3StylesheetBuilder = Css3StylesheetBuilder.create(stylesheetBuilder);
+        css3StylesheetBuilder
+
             .selector(".expand-chevron")
-            .open()
-                .style("position", "relative")
-                .style("display", "inline-block")
-                .style("width", "16pt")
-                .style("height", "16pt")
-            .close()
+                .cursor("pointer")
 
             .selector(".expand-chevron input")
-            .open()
-                .style("opacity", "0")
-                .style("width", "0")
-                .style("height", "0")
-            .close()
+                .opacity("0")
+                .width("0")
+                .height("0")
 
             .selector(".expand-chevron-icon")
-            .open()
-                .style("cursor", "pointer")
-            .close()
+                .transition(["transform", ".4s"])
+                .transform("rotate(0deg) translateX(0)")
 
-            .selector(".expand-chevron-icon")
-            .open()
-                .style("transition", ".4s")
-                .style("transform", "rotate(0deg) translateX(0)")
-            .close()
+            .selector(".expand-chevron-icon-small")
+                .fontSize("1em")
+                
+            .selector(".expand-chevron-icon-medium")
+                .fontSize("1.4em")
+
+            .selector(".expand-chevron-icon-large")
+                .fontSize("2em")
 
             .selector(".expand-chevron input:checked + .expand-chevron-icon")
-            .open()
-                .style("transition", ".4s")
-                .style("transform", "rotate(90deg) translateX(0)")
-            .close()
+                .transition(["transform", ".4s"])
+                .transform("rotate(90deg) translateX(0)")
 
             .selector(".expand-chevron input:disabled + .expand-chevron-icon")
-            .open()
-                .style("opacity", "0.6")
-                .style("cursor", "not-allowed")
-            .close()
+                .opacity("0.6")
 
-            .selector(".expand-chevron input:disabled:hover + .expand-chevron-icon")
-            .open()
-                .style("background-color", "#ccc")
-            .close();
-
-        return stylesheetBuilder.build();
+        return css3StylesheetBuilder.build();
     }
 
     /**
@@ -104,10 +97,10 @@ export class ExpandChevron {
      */
     static buildComponent(conmponentBuilder) {
         return conmponentBuilder
-            .root("label", "class=expand-chevron")
+            .root("label", "class=cntr cntr-columns cntr-centered expand-chevron")
             .open()
                 .node("input", "id=checkbox", "type=checkbox")
-                .node("i", "class=expand-chevron-icon fas fa-chevron-right")
+                .node("i", "id=icon", "class=expand-chevron-icon fas fa-chevron-right")
             .close()
             .build();
     }
@@ -120,6 +113,8 @@ export class ExpandChevron {
             InputElementDataBinding.link(this.model).to(this.component.get("checkbox"));
         }
 
+        StyleSelectorAccessor.from(this.component.get("icon")).enable(`expand-chevron-icon-${this.size}`);
+        
         this.component.get("checkbox").listenTo("change", this.clicked, this);
     }
 

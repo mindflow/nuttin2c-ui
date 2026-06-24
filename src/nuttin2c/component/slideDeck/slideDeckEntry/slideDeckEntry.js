@@ -44,7 +44,7 @@ export class SlideDeckEntry {
         return Css3StylesheetBuilder.create(stylesheetBuilder)
             .selector(".slide-deck-entry")
                 .position("relative")
-                .backgroundColor("#ffffff")
+                .backgroundColor("var(--default-panel-color)")
                 .gridColumn("1")
                 .gridRow("1")
                 .width("100%")

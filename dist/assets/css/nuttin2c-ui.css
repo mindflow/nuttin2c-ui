@@ -1,5 +1,7 @@
 :root {
     --border-color: lightgray;
+    --default-panel-color: #ffffff;
+    --filled-panel-color: #dfdfdf;
     --small-gap: 4pt;
     --medium-gap: 8pt;
     --large-gap: 16pt;
