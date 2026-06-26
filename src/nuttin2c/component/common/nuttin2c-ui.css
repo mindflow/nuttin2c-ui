@@ -1,4 +1,5 @@
 :root {
+    interpolate-size: allow-keywords;
     --border-color: lightgray;
     --default-panel-color: #ffffff;
     --filled-panel-color: #dfdfdf;
@@ -16,7 +17,6 @@
     --hidden-toggle-1: none;
     --hidden-toggle-2: none;
     --hidden-toggle-3: none;
-
 }
 
 /* Size adjustments */

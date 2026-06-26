@@ -123,8 +123,9 @@ export class ExpandChevron {
      * @param {ContainerEvent} event 
      */
     clicked(event) {
+        event.stopPropagation();
         const oldValue = this.expanded;
-        this.expanded = event.target.expanded;
+        this.expanded = event.target.checked;
 
         if (oldValue !== this.expanded) {
             this.events.trigger(ExpandChevron.EVENT_CHANGED, [event, this.expanded]);
