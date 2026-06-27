@@ -47,10 +47,12 @@ export class ToolBar {
     /**
      * @param {String} label 
      * @param {String} type E.g. Button.TYPE_PRIMARY
+     * @param {String} buttonSize E.g. Button.SIZE_MEDIUM
+     * @param {String} buttonIconClasses E.g. "fas fa-calendar-plus"
      * @returns {Button}
      */
-    async addButton(label, type = Button.TYPE_PRIMARY) {
-        const button = await this.buttonProvider.get([label, type]);
+    async addButton(label, type = Button.TYPE_PRIMARY, buttonSize = Button.SIZE_MEDIUM, buttonIconClasses = null) {
+        const button = await this.buttonProvider.get([label, type, buttonSize, buttonIconClasses]);
 
         if (this.buttons.length > 0) {
             /** @type {SimpleElement} */
