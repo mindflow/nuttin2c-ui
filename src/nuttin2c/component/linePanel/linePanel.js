@@ -26,7 +26,7 @@ export class LinePanel {
 		this.component = null;
 
 		/** @type {EventManager} */
-		this.eventManager = new EventManager();
+		this.events = new EventManager();
 
 		/** @type {Provider<LinePanelEntry>} */
 		this.linePanelEntryProvider = InjectionPoint.provider(LinePanelEntry);
@@ -68,16 +68,6 @@ export class LinePanel {
 	}
 
 	/**
-	 * @type { EventManager }
-	 */
-	get events() { return this.eventManager; }
-
-	/**
-	 * @type { EventManager }
-	 */
-	get events() { return this.eventManager; }
-
-	/**
 	 * Reset
 	 * 
 	 * @param {ContainerEvent} event 
@@ -100,7 +90,7 @@ export class LinePanel {
      * @param {any} record 
      */
     async populateRecord(record) {
-        const recordElement = await this.eventManager.trigger(LinePanel.RECORD_ELEMENT_REQUESTED, [null, record]);
+        const recordElement = await this.events.trigger(LinePanel.RECORD_ELEMENT_REQUESTED, [null, record]);
         
 		if (!recordElement) {
 			return;

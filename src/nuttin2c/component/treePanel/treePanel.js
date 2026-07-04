@@ -34,7 +34,7 @@ export class TreePanel {
 		this.component = null;
 
 		/** @type {EventManager} */
-		this.eventManager = new EventManager();
+		this.events = new EventManager();
 
 		/** @type {Provider<TreePanelEntry>} */
 		this.treePanelEntryProvier = InjectionPoint.provider(TreePanelEntry);
@@ -81,11 +81,6 @@ export class TreePanel {
 		this.treePanelEntry.component.get("recordElementContainer").remove();
 
 	}
-
-	/**
-	 * @type { EventManager }
-	 */
-	get events() { return this.eventManager; }
 
 	/**
 	 * Called by the root TreePanelEntry when it's or one of it's subordinate elements need to be rendered

@@ -60,7 +60,7 @@ export class CommonInput {
         this.tainted = false;
 
         /** @type {EventManager} */
-        this.eventManager = new EventManager();
+        this.events = new EventManager();
 
         /** @type {InputElementDataBinding} */
         this.dataBinding = null;
@@ -113,8 +113,6 @@ export class CommonInput {
             this.component.get("bubbleMessage").listenTo("click", this.errorClicked, this);
         }
     }
-
-    get events() { return this.eventManager; }
 
     get value() { 
         /** @type {HTMLInputElement} */

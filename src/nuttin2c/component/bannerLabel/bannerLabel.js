@@ -91,9 +91,9 @@ export class BannerLabel {
         this.component.get("bannerLabel").addChild(this.success.component);
         this.component.get("bannerLabel").addChild(this.warning.component);
         this.component.get("bannerLabel").addChild(this.error.component);
-        this.success.eventManager.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
-        this.warning.eventManager.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
-        this.error.eventManager.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
+        this.success.events.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
+        this.warning.events.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
+        this.error.events.listenTo(BannerLabelMessage.EVENT_CLOSE_CLICKED, this.hide, this);
         this.active = this.success;
     }
 

@@ -60,7 +60,7 @@ export class PasswordMatcherInput {
 		);
 
         /** @type {EventManager} */
-        this.eventManager = new EventManager();
+        this.events = new EventManager();
     }
 
     /**
@@ -122,8 +122,6 @@ export class PasswordMatcherInput {
             .withValidListener(new Method(this.passwordMatcherValidOccured, this));
 
     }
-
-    get events() { return this.eventManager; }
 
     passwordMatcherValidOccured() {
         PropertyAccessor.setValue(this.model, this.name, this.passwordMatcherModel.getNewPassword())

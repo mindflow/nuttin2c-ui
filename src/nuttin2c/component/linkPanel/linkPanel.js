@@ -59,8 +59,8 @@ export class LinkPanel {
         /** @type {String} */
         this.theme = theme;
 
-        /** @type {EventManager<LinkPanel>} */
-        this.eventManager = new EventManager();
+        /** @type {EventManager} */
+        this.events = new EventManager();
     }
 
     /**
@@ -207,9 +207,6 @@ export class LinkPanel {
             .build();
     }
 
-    /** @type {EventManager<LinkPanel>} */
-    get events() { return this.eventManager; }
-
     postConfig() {
         this.component = this.componentFactory.create(LinkPanel);
         CanvasStyles.enableStyle(LinkPanel.name);
@@ -235,7 +232,7 @@ export class LinkPanel {
 
 
         this.component.get("link").listenTo("click", (event) => {
-            this.eventManager.trigger(LinkPanel.EVENT_CLICKED, event);
+            this.events.trigger(LinkPanel.EVENT_CLICKED, event);
         }, this);
     }
 

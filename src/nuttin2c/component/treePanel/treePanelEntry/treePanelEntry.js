@@ -35,7 +35,7 @@ export class TreePanelEntry {
 		this.panelProvider = InjectionPoint.provider(Panel);
 
 		/** @type {EventManager} */
-		this.eventManager = new EventManager();
+		this.events = new EventManager();
 
         /** @type {StateManager<any[]>} */
         this.arrayState = new StateManager();
@@ -115,11 +115,6 @@ export class TreePanelEntry {
 		StyleSelectorAccessor.from(this.component.get("root")).enable("cntr-round-bordered");
 	}
 
-	/**
-	 * @returns { EventManager }
-	 */
-	get events() { return this.eventManager; }
-
     /**
      * @param {Object} object 
      */
@@ -163,7 +158,7 @@ export class TreePanelEntry {
      */
     async createSubEntry(record) {
 		const treePanelSubEntry = await this.treePanelEntryProvider.get([record]);
-		const recordElement = await this.eventManager.trigger(TreePanelEntry.RECORD_ELEMENT_REQUESTED, [null, record, treePanelSubEntry, this]);
+		const recordElement = await this.events.trigger(TreePanelEntry.RECORD_ELEMENT_REQUESTED, [null, record, treePanelSubEntry, this]);
         
 		if (!recordElement) {
 			return;
@@ -171,7 +166,7 @@ export class TreePanelEntry {
 
 		treePanelSubEntry.component.setChild("recordElement", recordElement.component);
 
-		await this.eventManager
+		await this.events
 			.trigger(TreePanelEntry.EVENT_EXPAND_TOGGLE_OVERRIDE, [null, treePanelSubEntry, record]);
 
 		treePanelSubEntry.events
@@ -273,7 +268,7 @@ export class TreePanelEntry {
 
 		const elementButtonsContainer = await this.component.get("buttons");
 
-		await this.eventManager
+		await this.events
 			.trigger(TreePanelEntry.SUB_RECORDS_STATE_UPDATE_REQUESTED, [event, this.record, this.arrayState, elementButtonsContainer]);
 
 		if (elementButtonsContainer.containerElement.firstChild) {

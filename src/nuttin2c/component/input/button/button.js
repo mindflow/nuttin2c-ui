@@ -62,8 +62,8 @@ export class Button {
         /** @type {String} */
         this.iconClass = iconClass;
 
-        /** @type {EventManager<Button>} */
-        this.eventManager = new EventManager();
+        /** @type {EventManager} */
+        this.events = new EventManager();
     }
 
     /**
@@ -210,9 +210,6 @@ export class Button {
             .build();
     }
 
-    /** @type {EventManager<Button>} */
-    get events() { return this.eventManager; }
-
     postConfig() {
         this.component = this.componentFactory.create(Button);
         CanvasStyles.enableStyle(Button.name);
@@ -229,7 +226,7 @@ export class Button {
             .enable(this.buttonType);
 
         this.component.get("button").listenTo("click", (event) => {
-            this.eventManager.trigger(Button.EVENT_CLICKED, event);
+            this.events.trigger(Button.EVENT_CLICKED, event);
         }, this);
     }
 

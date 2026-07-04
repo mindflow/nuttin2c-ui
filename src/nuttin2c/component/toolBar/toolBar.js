@@ -20,7 +20,7 @@ export class ToolBar {
         this.component = null;
 
         /** @type {EventManager} */
-        this.eventManager = new EventManager();
+        this.events = new EventManager();
 
 		/** @type {Provider<Button>} */
 		this.buttonProvider = InjectionPoint.provider(Button);
