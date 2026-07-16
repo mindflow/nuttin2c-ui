@@ -7,9 +7,9 @@ import { CanvasStyles,
     Css3StylesheetBuilder
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
-import { SlideDeckEntry } from "./slideDeckEntry/slideDeckEntry.js";
+import { CardDeckEntry } from "./cardDeckEntry/cardDeckEntry.js";
 
-export class SlideDeck {
+export class CardDeck {
 
     static EVENT_ENTRY_CHANGED = "eventEntryChanged";
 
@@ -28,19 +28,19 @@ export class SlideDeck {
         /** @type {Map<Component>} */
         this.componentMap = componentMap;
 
-        /** @type {Provider<SlideDeckEntry>} */
-        this.slideDeckEntryProvider = InjectionPoint.provider(SlideDeckEntry);
+        /** @type {Provider<CardDeckEntry>} */
+        this.cardDeckEntryProvider = InjectionPoint.provider(CardDeckEntry);
 
-        /** @type {List<SlideDeckEntry>} */
-        this.slideDeckEntryList = new List();
+        /** @type {List<CardDeckEntry>} */
+        this.cardDeckEntryList = new List();
 
-        /** @type {Map<SlideDeckEntry>} */
-        this.slideDeckEntryMap = new Map();
+        /** @type {Map<CardDeckEntry>} */
+        this.cardDeckEntryMap = new Map();
 
         /** @type {Map<Number>} */
-        this.slideDeckEntryIndexMap = new Map();
+        this.cardDeckEntryIndexMap = new Map();
 
-        /** @type {SlideDeckEntry} */
+        /** @type {CardDeckEntry} */
         this.currentEntry = null;
 
         /** @type {EventManager} */
@@ -54,7 +54,7 @@ export class SlideDeck {
      */
     static buildStylesheet(stylesheetBuilder) {
         return Css3StylesheetBuilder.create(stylesheetBuilder)
-            .selector(".slide-deck")
+            .selector(".card-deck")
                 .position("relative")
                 .backgroundColor("#f1f1f1")
                 .display("grid")
@@ -65,80 +65,80 @@ export class SlideDeck {
 
     static buildComponent(componentBuilder) {
         return componentBuilder
-            .root("div", "id=slideDeckEntries", "class=slide-deck")
+            .root("div", "id=cardDeckEntries", "class=card-deck")
             .build();
     }
 
     async postConfig() {
-        this.component = this.componentFactory.create(SlideDeck);
-        CanvasStyles.enableStyle(SlideDeck.name);
+        this.component = this.componentFactory.create(CardDeck);
+        CanvasStyles.enableStyle(CardDeck.name);
 
         if (this.componentMap) {
             this.prepareEntries();
         }
 
         this.scrollback = () => {
-            this.component.get("slideDeckEntries").element.parentElement.scrollTo(0,0);
+            this.component.get("cardDeckEntries").element.parentElement.scrollTo(0,0);
         };
     }
 
     prepareEntries() {
         this.componentMap.forEach(async (key, component) => {
 
-            const slideDeckEntry = await this.slideDeckEntryProvider.get();
+            const cardDeckEntry = await this.cardDeckEntryProvider.get();
 
             if (null == this.currentEntry) {
-                slideDeckEntry.show();
-                this.currentEntry = slideDeckEntry;
+                cardDeckEntry.show();
+                this.currentEntry = cardDeckEntry;
             } else {
-                slideDeckEntry.hide(0);
+                cardDeckEntry.hide(0);
             }
 
-            this.slideDeckEntryMap.set(key, slideDeckEntry);
-            this.slideDeckEntryList.add(slideDeckEntry);
-            this.slideDeckEntryIndexMap.set(key, this.slideDeckEntryList.size() -1);
+            this.cardDeckEntryMap.set(key, cardDeckEntry);
+            this.cardDeckEntryList.add(cardDeckEntry);
+            this.cardDeckEntryIndexMap.set(key, this.cardDeckEntryList.size() -1);
 
-            slideDeckEntry.setContent(component);
-            slideDeckEntry.setIndex(this.slideDeckEntryList.size() - 1);
+            cardDeckEntry.setContent(component);
+            cardDeckEntry.setIndex(this.cardDeckEntryList.size() - 1);
 
-            this.component.addChild("slideDeckEntries", slideDeckEntry.component);
+            this.component.addChild("cardDeckEntries", cardDeckEntry.component);
             return true;
         }, this);
     }
 
     slideNext() {
-        if (this.currentEntry.index + 1 >= this.slideDeckEntryList.size()) {
+        if (this.currentEntry.index + 1 >= this.cardDeckEntryList.size()) {
             return;
         }
-        const nextEntry = this.slideDeckEntryList.get(this.currentEntry.index + 1);
+        const nextEntry = this.cardDeckEntryList.get(this.currentEntry.index + 1);
         this.currentEntry.hide(nextEntry.index);
         this.currentEntry = nextEntry;
         this.currentEntry.show();
         
-        this.events.trigger(SlideDeck.EVENT_ENTRY_CHANGED);
+        this.events.trigger(CardDeck.EVENT_ENTRY_CHANGED);
     }
 
     slidePrevious() {
         if (this.currentEntry.index <= 0) {
             return;
         }
-        const nextEntry = this.slideDeckEntryList.get(this.currentEntry.index - 1);
+        const nextEntry = this.cardDeckEntryList.get(this.currentEntry.index - 1);
         this.currentEntry.hide(nextEntry.index);
         this.currentEntry = nextEntry;
         this.currentEntry.show();
 
-        this.events.trigger(SlideDeck.EVENT_ENTRY_CHANGED);
+        this.events.trigger(CardDeck.EVENT_ENTRY_CHANGED);
     }
 
     slideTo(name) {
-        const nextEntry = this.slideDeckEntryMap.get(name);
+        const nextEntry = this.cardDeckEntryMap.get(name);
         this.currentEntry.hide(nextEntry.index);
         this.currentEntry = nextEntry;
         this.currentEntry.show();
 
-        this.events.trigger(SlideDeck.EVENT_ENTRY_CHANGED);
+        this.events.trigger(CardDeck.EVENT_ENTRY_CHANGED);
     }
 
 }
 
-TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SlideDeck));
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(CardDeck));

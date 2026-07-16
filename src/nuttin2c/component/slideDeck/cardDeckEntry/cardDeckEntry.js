@@ -11,9 +11,9 @@ import { BaseElement,
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
-export class SlideDeckEntry {
+export class CardDeckEntry {
 
-    static DEFAULT_CLASS = "slide-deck-entry";
+    static DEFAULT_CLASS = "card-deck-entry";
 
     static ENTRY_POSITION_FRONT = "position-front";
     static ENTRY_POSITION_BEHIND = "position-behind";
@@ -33,7 +33,7 @@ export class SlideDeckEntry {
         this.index = 0;
 
         /** @type {String} */
-        this.position = SlideDeckEntry.ENTRY_POSITION_FRONT;
+        this.position = CardDeckEntry.ENTRY_POSITION_FRONT;
     }
 
     /**
@@ -42,7 +42,7 @@ export class SlideDeckEntry {
      */
     static buildStylesheet(stylesheetBuilder) {
         return Css3StylesheetBuilder.create(stylesheetBuilder)
-            .selector(".slide-deck-entry")
+            .selector(".card-deck-entry")
                 .position("relative")
                 .backgroundColor("var(--default-panel-color)")
                 .gridColumn("1")
@@ -51,22 +51,22 @@ export class SlideDeckEntry {
                 .height("100%")
                 .minHeight("0")
 
-            .selector(".slide-deck-entry.position-front")
+            .selector(".card-deck-entry.position-front")
                 .transform("translate(0%, 0%)")
                 .transition(["transform", ".6s"])
 
-            .selector(".slide-deck-entry.position-behind")
+            .selector(".card-deck-entry.position-behind")
                 .transform("translate(0%, 0%)")
                 .transition(["transform", ".6s"])
 
-            .selector(".slide-deck-entry.position-right")
+            .selector(".card-deck-entry.position-right")
                 .transform("translate(+105%, 0%)")
                 .transition(["transform", ".6s"])
 
-            .selector(".slide-deck-entry-content.existance-removed")
+            .selector(".card-deck-entry-content.existance-removed")
                 .display("none")
 
-            .selector(".slide-deck-entry-content.existance-present")
+            .selector(".card-deck-entry-content.existance-present")
                 .position("relative")
                 .height("100%")
 
@@ -79,9 +79,9 @@ export class SlideDeckEntry {
      */
     static buildComponent(componentBuilder) {
         return componentBuilder
-            .root("div", "id=slideDeckEntry", "class=slide-deck-entry")
+            .root("div", "id=cardDeckEntry", "class=card-deck-entry")
             .open()
-                .node("div", "id=slideDeckEntryContent", "class=slide-deck-entry-content")
+                .node("div", "id=cardDeckEntryContent", "class=card-deck-entry-content")
             .close()
             .build();
     }
@@ -90,19 +90,19 @@ export class SlideDeckEntry {
      * @returns {BaseElement}
      */
     get contentElement() {
-        return this.component.get("slideDeckEntryContent");
+        return this.component.get("cardDeckEntryContent");
     }
 
     /**
      * @returns {BaseElement}
      */
     get entryElement() {
-        return this.component.get("slideDeckEntry");
+        return this.component.get("cardDeckEntry");
     }
 
     async postConfig() {
-        this.component = this.componentFactory.create(SlideDeckEntry);
-        CanvasStyles.enableStyle(SlideDeckEntry.name);
+        this.component = this.componentFactory.create(CardDeckEntry);
+        CanvasStyles.enableStyle(CardDeckEntry.name);
     }
 
     setIndex(index) {
@@ -114,25 +114,25 @@ export class SlideDeckEntry {
     }
 
     show() {
-        this.setContentVisibility(SlideDeckEntry.CONTENT_EXISTANCE_PRESENT);
-        this.setShift(SlideDeckEntry.ENTRY_POSITION_FRONT);
+        this.setContentVisibility(CardDeckEntry.CONTENT_EXISTANCE_PRESENT);
+        this.setShift(CardDeckEntry.ENTRY_POSITION_FRONT);
     }
 
     hide(nextIndex) {
         if (nextIndex > this.index) {
-            this.setShift(SlideDeckEntry.ENTRY_POSITION_BEHIND);
+            this.setShift(CardDeckEntry.ENTRY_POSITION_BEHIND);
         } else {
-            this.setShift(SlideDeckEntry.ENTRY_POSITION_RIGHT);
+            this.setShift(CardDeckEntry.ENTRY_POSITION_RIGHT);
         }
         this.adjustWhenHidden();
     }
 
     adjustWhenHidden() {
         TimePromise.asPromise(600, () => {
-            if (this.position === SlideDeckEntry.ENTRY_POSITION_FRONT) {
+            if (this.position === CardDeckEntry.ENTRY_POSITION_FRONT) {
                 return;
             }
-            this.setContentVisibility(SlideDeckEntry.CONTENT_EXISTANCE_REMOVED);
+            this.setContentVisibility(CardDeckEntry.CONTENT_EXISTANCE_REMOVED);
         });
     }
 
@@ -147,4 +147,4 @@ export class SlideDeckEntry {
 
 }
 
-TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(SlideDeckEntry));
+TypeConfigPack.instance().addTypeConfig("nuttin2c-ui", PrototypeConfig.unnamed(CardDeckEntry));
