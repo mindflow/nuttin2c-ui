@@ -60,7 +60,7 @@ export class CardDeckEntry {
                 .transition(["transform", ".6s"])
 
             .selector(".card-deck-entry.position-right")
-                .transform("translate(+105%, 0%)")
+                .transform("translate(+100.5%, 0%)")
                 .transition(["transform", ".6s"])
 
             .selector(".card-deck-entry-content.existance-removed")

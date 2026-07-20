@@ -86,6 +86,7 @@ export class DialogBox {
 
                 .selector(".dialogbox-body")
                 .open()
+                    .style("position", "relative")
                     .style("overflow-y", "visible")
                 .close()
             .close()
@@ -113,8 +114,7 @@ export class DialogBox {
 
                 .selector(".dialogbox-content")
                 .open()
-                    .style("position", "relative")
-                    .style("border", "1px solid rgba(0, 0, 0, 0.2)")
+                    .style("border", "1pt solid rgba(0, 0, 0, 0.2)")
                     .style("border-radius", "0.3rem")
                     .style("height", "auto")
                 .close()
@@ -242,6 +242,7 @@ export class DialogBox {
             .selector(".dialogbox-frame")
             .open()
                 .style("margin", "0")
+                .style("overflow-x", "hidden")
             .close()
 
             .selector(".dialogbox-content")

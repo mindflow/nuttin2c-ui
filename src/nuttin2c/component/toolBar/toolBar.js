@@ -110,6 +110,8 @@ export class ToolBar {
 
             .selector(".tool-bar-container")
                 .flex("0", "1", "auto")
+                .display("flex")
+                .flexDirection("row")
 
             .selector(".tool-bar-button-container")
                 .flex("0", "1", "auto")
