@@ -14,13 +14,16 @@ export class SelectInputOptionsSource {
             optionsArray.push({"label": value, "value": key });
         });
 
-        /** @type {Object} */
+        /** @type {Array} */
         this.options = optionsArray;
 
         /** @type {EventManager} */
         this.events = new EventManager();
     }
 
+    size() {
+        return this.options.length;
+    }
 
     /**
      * 
