@@ -241,6 +241,12 @@ export class SelectInput {
         }
 	}
 
+    get value() {
+        /** @type {SelectElement} */
+        const select = this.component.get("select");
+        return select.value;
+    }
+
     clicked(event) {
         this.events.trigger(SelectInput.EVENT_CLICKED, [event]);
     }
