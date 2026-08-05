@@ -1,4 +1,4 @@
-import { Logger } from "coreutil_v1";
+import { ArrayUtils, Logger } from "coreutil_v1";
 import { CanvasStyles,
     Component,
     EventManager,
@@ -245,6 +245,20 @@ export class SelectInput {
         /** @type {SelectElement} */
         const select = this.component.get("select");
         return select.value;
+    }
+
+    set value(newValue) {
+        /** @type {SelectElement} */
+        const select = this.component.get("select");
+        for (const option of select.options) {
+            if (option.value === newValue) {
+                select.value = newValue;
+                if (this.dataBinding) {
+                    this.dataBinding.push();
+                }
+                return;
+            }
+        }
     }
 
     clicked(event) {
