@@ -77,18 +77,18 @@ export class LocalDateSelectorInput {
 
     buildMonthOptions() {
         const monthOptions = new Map();
-        monthOptions.set("01", "January");
-        monthOptions.set("02", "February");
-        monthOptions.set("03", "March");
-        monthOptions.set("04", "April");
+        monthOptions.set("01", "Jan");
+        monthOptions.set("02", "Feb");
+        monthOptions.set("03", "Mar");
+        monthOptions.set("04", "Apr");
         monthOptions.set("05", "May");
-        monthOptions.set("06", "June");
-        monthOptions.set("07", "July");
-        monthOptions.set("08", "August");
-        monthOptions.set("09", "September");
-        monthOptions.set("10", "October");
-        monthOptions.set("11", "November");
-        monthOptions.set("12", "December");
+        monthOptions.set("06", "Jun");
+        monthOptions.set("07", "Jul");
+        monthOptions.set("08", "Aug");
+        monthOptions.set("09", "Sep");
+        monthOptions.set("10", "Oct");
+        monthOptions.set("11", "Nov");
+        monthOptions.set("12", "Dec");
         return monthOptions;
     }
 
@@ -127,7 +127,7 @@ export class LocalDateSelectorInput {
 
             .selector(".local-date-entry")
                 .display("inline-block")
-                .height("calc(1.5em + 1rem - 1px)")
+                .height("calc(1.5em + 1rem - 2px)")
                 .padding("0.6rem", "2.5rem", "0.3rem", "0.75rem")
                 .fontSize("1rem")
                 .fontWeight("400")
