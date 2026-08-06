@@ -17,7 +17,7 @@ import { InjectionPoint,
     PrototypeConfig,
     TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
-import { SelectInputOptionsSource } from "./selectInputOptionsSource";
+import { SelectInputOptionsSource } from "../selectInputOptionsSource.js";
 
 const LOG = new Logger("SelectInput");
 
