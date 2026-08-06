@@ -1,6 +1,6 @@
 import { Logger } from "coreutil_v1";
 import { CommonInput } from "../commonInput";
-import { Component, ComponentBuilder, Css3StylesheetBuilder, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
+import { Component, ComponentBuilder, Css3StylesheetBuilder, RequiredValidator, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { PrototypeConfig, TypeConfigPack } from "mindi_v1";
 
 const LOG = new Logger("HiddenInput");
@@ -12,11 +12,12 @@ export class HiddenInput extends CommonInput {
      * @param {string} name
      * @param {object} model
      */
-    constructor(name, model = null) {
+    constructor(name, model = null, mandatory = false) {
 
         super(HiddenInput,
             name,
-            model);
+            model,
+            new RequiredValidator(false, mandatory));
     }
 
     /**
