@@ -34,6 +34,9 @@ export class Button {
     static SPINNER_VISIBLE = "spinner-container-visible";
     static SPINNER_HIDDEN = "spinner-container-hidden";
 
+    static OUTLINE_HIDDEN = "button-outline-hidden";
+    static OUTLINE_VISIBLE = "button-outline-visible";
+
     static EVENT_CLICKED = CommonEvents.CLICKED;
 
     /**
@@ -95,6 +98,11 @@ export class Button {
                 .style("line-height", "1.5")
                 .style("border-radius", "0.25rem")
                 .style("transition", "color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out")
+            .close()
+
+            .selector(".button-outline-hidden")
+            .open()
+                .style("display", "none")
             .close()
 
             .selector(".button-medium")
@@ -199,7 +207,7 @@ export class Button {
      */
     static buildComponent(componentBuilder) {
         return componentBuilder
-            .root("div", "class=button-outline")
+            .root("div", "id=buttonOutline", "class=button-outline-visible")
             .open()
                 .node("button", "class=button", "id=button", "type=button")
                 .node("div", "class=spinner-container-hidden", "id=spinnerContainer")
@@ -257,6 +265,18 @@ export class Button {
 
     enable() {
         this.component.get("button").removeAttribute("disabled");
+    }
+
+    hide() {
+        StyleSelectorAccessor.from(this.component.get("buttonOutline"))
+            .enable(Button.OUTLINE_HIDDEN)
+            .disable(Button.OUTLINE_VISIBLE);
+    }
+
+    show() {
+        StyleSelectorAccessor.from(this.component.get("buttonOutline"))
+            .disable(Button.OUTLINE_HIDDEN)
+            .enable(Button.OUTLINE_VISIBLE);
     }
 }
 
