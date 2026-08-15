@@ -19,6 +19,7 @@ import { InjectionPoint,
     TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents.js";
 import { SelectInputOptionsSource } from "../selectInputOptionsSource.js";
+import { ContainerEvent } from "containerbridge_v1";
 
 const LOG = new Logger("LocalDateSelectorInput");
 
@@ -278,17 +279,32 @@ export class LocalDateSelectorInput {
         this.updateLocalDate();
     }
 
-    handleYearChange(optionsArray) {
+    /**
+     * 
+     * @param {ContainerEvent} event 
+     * @param {Array} optionsArray 
+     */
+    handleYearChange(event, optionsArray) {
         this.component.get("year").options = optionsArray;
         this.updateDayOfMonthOptions();
     }
 
-    handleMonthChange(optionsArray) {
+    /**
+     * 
+     * @param {ContainerEvent} event 
+     * @param {Array} optionsArray 
+     */
+    handleMonthChange(event, optionsArray) {
         this.component.get("month").options = optionsArray;
         this.updateDayOfMonthOptions();
     }
 
-    handleDayChange(optionsArray) {
+    /**
+     * 
+     * @param {ContainerEvent} event 
+     * @param {Array} optionsArray 
+     */
+    handleDayChange(event, optionsArray) {
         this.component.get("day").options = optionsArray;
     }
 
