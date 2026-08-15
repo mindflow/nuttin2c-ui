@@ -18,6 +18,7 @@ import { InjectionPoint,
     TypeConfigPack } from "mindi_v1";
 import { CommonEvents } from "../../common/commonEvents";
 import { SelectInputOptionsSource } from "../selectInputOptionsSource.js";
+import { ContainerEvent } from "containerbridge_v1";
 
 const LOG = new Logger("SelectInput");
 
@@ -219,13 +220,20 @@ export class SelectInput {
     }
 
     /**
-     * 
+     * @param {ContainerEvent} event
      * @param {Array<OptionElement>} optionsArray 
      */
-    handleOptionsChange(optionsArray) {
+    handleOptionsChange(event, optionsArray) {
         /** @type {SelectElement} */
         const select = this.component.get("select");
+        const existingValue = select.value;
         select.options = optionsArray;
+        const newValue = select.value;
+
+        if (existingValue !== newValue) {
+            this.events.trigger(SelectInput.EVENT_CHANGED, [event, newValue]);
+        }
+        
         if (this.dataBinding) {
             this.dataBinding.push();
         }
@@ -266,7 +274,7 @@ export class SelectInput {
     }
 
     changed(event) {
-        this.events.trigger(SelectInput.EVENT_CHANGED, [event]);
+        this.events.trigger(SelectInput.EVENT_CHANGED, [event, this.value]);
     }
 
     blurred(event) {

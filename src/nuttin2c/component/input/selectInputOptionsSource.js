@@ -36,11 +36,11 @@ export class SelectInputOptionsSource {
             optionsArray.push({"label": value, "value": key });
         });
         this.options = optionsArray;
-        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
+        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [null, this.options]);
     }
 
     refresh() {
-        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [this.options]);
+        this.events.trigger(SelectInputOptionsSource.EVENT_OPTIONS_CHANGED, [null, this.options]);
     }
 
 }
