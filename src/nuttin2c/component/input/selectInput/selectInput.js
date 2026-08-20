@@ -262,7 +262,7 @@ export class SelectInput {
             if (option.value === newValue) {
                 select.value = newValue;
                 if (this.dataBinding) {
-                    this.dataBinding.push();
+                    this.dataBinding.pull();
                 }
                 return;
             }

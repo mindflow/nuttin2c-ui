@@ -15,6 +15,7 @@ export class CommonInput {
     static EVENT_KEYUPPED = CommonEvents.KEYUPPED;
     static EVENT_CHANGED = CommonEvents.CHANGED;
     static EVENT_BLURRED = CommonEvents.BLURRED;
+    static EVENT_INPUT = CommonEvents.INPUT;
 
     /**
      * 
@@ -103,6 +104,7 @@ export class CommonInput {
             .listenTo("change", this.changed, this)
             .listenTo("blur", this.blurred, this)
             .listenTo("click", this.clicked, this)
+            .listenTo("input", this.input, this)
             .listenTo("keyup", (event) => {
                 if (event.isKeyCode(13)) {
                     this.entered(event);
@@ -153,6 +155,18 @@ export class CommonInput {
             this.tainted = false;
         }
         this.events.trigger(CommonInput.EVENT_CHANGED, event);
+    }
+
+    /**
+     * 
+     * @param {ContainerEvent} event 
+     */
+    input(event) {
+        this.tainted = true;
+        if ("" === event.targetValue) {
+            this.tainted = false;
+        }
+        this.events.trigger(CommonInput.EVENT_INPUT, event);
     }
 
     clicked(event) {
