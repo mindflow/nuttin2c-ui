@@ -1,4 +1,4 @@
-import { ArrayUtils, Logger } from "coreutil_v1";
+import { Logger } from "coreutil_v1";
 import { CanvasStyles,
     Component,
     EventManager,
