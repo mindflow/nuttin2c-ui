@@ -240,14 +240,14 @@ export class FileUpload {
      * @param {ContainerEvent} event
      */
     fileInputChanged(event) {
-        this.processFiles(event.files);
+        this.processFiles(event, event.files);
     }
 
     /**
-     * Process uploaded files and validate against file type array
+     * @param {ContainerEvent} event
      * @param {ContainerFileData[]} files
      */
-    async processFiles(files) {
+    async processFiles(event, files) {
         const supportedFiles = [];
         const unsupportedFiles = [];
         const addedFiles = [];
@@ -282,7 +282,7 @@ export class FileUpload {
 
         // Trigger file added event for each supported file
         for (const file of addedFiles) {
-            this.events.trigger(FileUpload.EVENT_FILE_ADDED, [file]);
+            this.events.trigger(FileUpload.EVENT_FILE_ADDED, [event, file]);
         }
     }
 
