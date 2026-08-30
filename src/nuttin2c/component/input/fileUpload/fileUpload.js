@@ -56,6 +56,7 @@ export class FileUpload {
 
         /** @type {StateManager<ContainerFileData>}  */
         this.fileArrayState = new StateManager();
+        this.fileArrayState.react(new Method(this.checkFileUploadComplete, this));
 
         /** @type {Provider<FileUploadEntry>} */
         this.fileUploadEntryProvider = InjectionPoint.provider(FileUploadEntry);
@@ -252,7 +253,12 @@ export class FileUpload {
         const unsupportedFiles = [];
         const addedFiles = [];
 
-        for (const file of files) {
+        const newFiles = files.filter(file => !this.fileAlreadySeleted(file));
+        if (newFiles.length === 0) {
+            return;
+        }
+
+        for (const file of newFiles) {
             const supportedFile = this.isFileTypeSupported(file);
             const fileAlreadySeleted = this.fileAlreadySeleted(file);
             if (supportedFile && !fileAlreadySeleted) {
@@ -369,7 +375,6 @@ export class FileUpload {
             this.fileArrayState.reactTo(file.name, new Method(fileEntry.updateProgress, fileEntry));
             fileList.addChild(fileEntry.component);
         }
-        this.fileArrayState.react(new Method(this.checkFileUploadComplete, this));
     }
 
     checkFileUploadComplete() {
