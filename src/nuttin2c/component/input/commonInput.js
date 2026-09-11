@@ -3,7 +3,6 @@ import { InputElementDataBinding, AbstractValidator, TemplateComponentFactory, C
 import { InjectionPoint } from "mindi_v1";
 import { CommonEvents } from "../common/commonEvents";
 import { ContainerEvent } from "containerbridge_v1";
-import { BannerMessage } from "../bannerMessage/bannerMessage.js";
 import { BubbleMessage } from "../bubbleMessage/bubbleMessage.js";
 
 const LOG = new Logger("CommonInput");
