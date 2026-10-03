@@ -143,7 +143,10 @@ export class ExpandChevron {
      * Set the toggle state programmatically
      * @param {boolean} expanded 
      */
-    toggle(expanded) {
+    toggle(expanded = null) {
+        if (expanded === null) {
+            expanded = !this.expanded;
+        }
         if (this.expanded === expanded) {
             return; // No change
         }
