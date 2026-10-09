@@ -79,14 +79,13 @@ export class BackgroundVideo {
 			.root("div", "id=backgroundVideo", "class=background-video")
 			.open()
 				.node("div", "id=overlay", "class=background-video-overlay")
-				.node("video", "id=video", "class=background-video-player",
-				        "playsinline=true",
-						"autoplay=true",
+				.node("video", "id=video",
+				        "playsinline",
+						"autoplay",
 						"autobuffer=true",
-				        "muted=true", "loop=loop")
-				.open()
-					.node("source", "id=source", "src=", "type=video/mp4")
-				.close()
+				        "muted",
+						"loop",
+						"class=background-video-player")
 			.close()
 			.build();
 	}
@@ -99,7 +98,7 @@ export class BackgroundVideo {
 		this.component = this.componentFactory.create(BackgroundVideo);
 		CanvasStyles.enableStyle(BackgroundVideo.name);
 
-        this.component.get("source").setAttributeValue("src", this.videoSrc);
+        this.component.get("video").setAttributeValue("src", this.videoSrc);
 		if (this.overlayColor) {
 			this.component.get("overlay").setAttributeValue("style", "background-color:" + this.overlayColor + ";");
 		}
