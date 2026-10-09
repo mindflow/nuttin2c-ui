@@ -14,7 +14,7 @@ const LOG = new Logger("BackgroundVideo");
 
 export class BackgroundVideo {
 
-    constructor(videoSrc){
+    constructor(videoSrc, overlayColor = null){
 
         /** @type {InlineComponentFactory} */
         this.componentFactory = InjectionPoint.instance(InlineComponentFactory);
@@ -24,6 +24,9 @@ export class BackgroundVideo {
 
         /** @type {String} */
         this.videoSrc = videoSrc;
+
+        /** @type {String} */
+        this.overlayColor = overlayColor;
 	}
 
 	/**
@@ -59,7 +62,6 @@ export class BackgroundVideo {
 				.style("min-height", "100%")
 				.style("width", "auto")
 				.style("height", "auto")
-				.style("background-color", "#1144aa")
 				.style("opacity", "0.3")
 				.style("z-index", "1")
 			.close()
@@ -76,7 +78,7 @@ export class BackgroundVideo {
 		return componentBuilder
 			.root("div", "id=backgroundVideo", "class=background-video")
 			.open()
-				.node("div", "class=background-video-overlay")
+				.node("div", "id=overlay", "class=background-video-overlay")
 				.node("video", "id=video", "class=background-video-player",
 				        "playsinline=playsinline",
 						"autoplay=true",
@@ -97,6 +99,9 @@ export class BackgroundVideo {
 		CanvasStyles.enableStyle(BackgroundVideo.name);
 
         this.component.get("source").setAttributeValue("src", this.videoSrc);
+		if (this.overlayColor) {
+			this.component.get("overlay").setAttributeValue("style", "background-color:" + this.overlayColor + ";");
+		}
 	}
 
 	async playMuted() {
