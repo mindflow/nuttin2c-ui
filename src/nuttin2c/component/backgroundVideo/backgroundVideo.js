@@ -80,8 +80,10 @@ export class BackgroundVideo {
 			.open()
 				.node("div", "id=overlay", "class=background-video-overlay")
 				.node("video", "id=video", "class=background-video-player",
-				        "playsinline=playsinline",
+				        "playsinline=true",
 						"autoplay=true",
+						"autobuffer=true",
+						"oncanplay=this.muted=true",
 				        "muted=true", "loop=loop")
 				.open()
 					.node("source", "id=source", "src=", "type=video/mp4")

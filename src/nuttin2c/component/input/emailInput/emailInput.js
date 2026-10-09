@@ -80,7 +80,7 @@ export class EmailInput extends CommonInput {
             .open()
                 .node("div", "id=bubbleMessage")
                 .node("label", "id=label", "class=email-label hidden")
-                .node("input", "id=input", "type=text", "class=email-input-entry")
+                .node("input", "id=input", "type=text", "autocapitalize=none", "class=email-input-entry")
             .close();
         return componentBuilder.build();
     }
