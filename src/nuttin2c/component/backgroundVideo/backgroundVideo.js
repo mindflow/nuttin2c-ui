@@ -83,7 +83,6 @@ export class BackgroundVideo {
 				        "playsinline=true",
 						"autoplay=true",
 						"autobuffer=true",
-						"oncanplay=this.muted=true",
 				        "muted=true", "loop=loop")
 				.open()
 					.node("source", "id=source", "src=", "type=video/mp4")
