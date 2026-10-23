@@ -105,6 +105,12 @@ export class Button {
                 .style("display", "none")
             .close()
 
+            .selector(".button-outline-visible")
+            .open()
+                .style("display", "flex")
+                .style("flex-direction", "row")
+            .close()
+
             .selector(".button-medium")
             .open()
                 .style("font-size", "1rem")
@@ -209,11 +215,11 @@ export class Button {
         return componentBuilder
             .root("div", "id=buttonOutline", "class=button-outline-visible")
             .open()
-                .node("button", "class=button", "id=button", "type=button")
                 .node("div", "class=spinner-container-hidden", "id=spinnerContainer")
                 .open()
                     .node("div", "class=spinner")
                 .close()
+                .node("button", "class=button", "id=button", "type=button")
             .close()
             .build();
     }
