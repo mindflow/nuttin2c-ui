@@ -9,7 +9,9 @@ import {
     ComponentBuilder,
     StylesheetBuilder
 } from "nuttin2c-core_v1";
-import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
+import { InjectionPoint,
+    PrototypeConfig,
+    TypeConfigPack } from "mindi_v1";
 import { CustomAppearance } from "../../customAppearance.js";
 
 export class BannerLabelMessage {
@@ -147,12 +149,12 @@ export class BannerLabelMessage {
 
             .selector(".banner-label-message-spacing-above")
             .open()
-                .style("margin-top", "1rem")
+                .style("margin-top", "0.5rem")
             .close()
 
             .selector(".banner-label-message-spacing-below")
             .open()
-                .style("margin-bottom", "1rem")
+                .style("margin-bottom", "0.5rem")
             .close()
 
             .selector(".banner-label-message-spacing-above-below")

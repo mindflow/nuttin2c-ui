@@ -19,7 +19,7 @@ export class BannerLabel {
 		this.appearance = new CustomAppearance()
 			.withSize(CustomAppearance.SIZE_SMALL)
 			.withShape(CustomAppearance.SHAPE_ROUND)
-			.withSpacing(CustomAppearance.SPACING_BELOW);
+			.withSpacing(CustomAppearance.SPACING_ABOVE);
 
 		/** @type {BannerLabelMessage} */
 		this.success = InjectionPoint
@@ -55,7 +55,6 @@ export class BannerLabel {
 
             .selector(".banner-label-visible")
             .open()
-                .style("max-height", "50px")
                 .style("visibility", "visible")
                 .style("transition", "max-height .3s, visibility 0s")
             .close()
