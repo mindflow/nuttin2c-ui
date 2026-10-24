@@ -1,13 +1,17 @@
-import { CanvasStyles, ComponentBuilder, EventManager, InlineComponentFactory, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
+import { CanvasStyles, ComponentBuilder, EventManager, InlineComponentFactory, StyleSelectorAccessor, Stylesheet, StylesheetBuilder } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, TypeConfigPack } from "mindi_v1";
 import { CustomAppearance } from "../customAppearance.js";
 import { BannerLabelMessage } from "./bannerLabelMessage/bannerLabelMessage.js";
-import { ContainerAsync } from "containerbridge_v1";
+import { TimePromise } from "coreutil_v1";
 
 export class BannerLabel {
 
     static EVENT_HIDDEN = "bannerLabelHidden";
     static EVENT_SHOWN = "bannerLabelShown";
+
+    static LABEL = "banner-label";
+    static LABEL_VISIBLE = "banner-label-visible";
+    static LABEL_HIDDEN = "banner-label-hidden";
 
     constructor() {
         /** @type {InlineComponentFactory} */
@@ -53,17 +57,9 @@ export class BannerLabel {
                 .style("position", "relative")
             .close()
 
-            .selector(".banner-label-visible")
-            .open()
-                .style("visibility", "visible")
-                .style("transition", "max-height .3s, visibility 0s")
-            .close()
-
             .selector(".banner-label-hidden")
             .open()
                 .style("max-height", "0px")
-                .style("visibility", "hidden")
-                .style("transition", "max-height .3s .3s, visibility 0s .3s")
             .close()
 
             .build();
@@ -101,8 +97,8 @@ export class BannerLabel {
      * @param {String} header 
      * @param {String} message 
      */
-    showSuccess(header, message) {
-        this.showBanner(this.success, header, message);
+    async showSuccess(header, message) {
+        await this.showBanner(this.success, header, message);
     }
 
     /**
@@ -110,8 +106,8 @@ export class BannerLabel {
      * @param {String} header 
      * @param {String} message 
      */
-    showWarning(header, message) {
-        this.showBanner(this.warning, header, message);
+    async showWarning(header, message) {
+        await this.showBanner(this.warning, header, message);
     }
 
     /**
@@ -119,25 +115,41 @@ export class BannerLabel {
      * @param {String} header 
      * @param {String} message 
      */
-    showError(header, message) {
-        this.showBanner(this.error, header, message);
+    async showError(header, message) {
+        await this.showBanner(this.error, header, message);
     }
 
-    /**
-     * 
-     * @param {String} header 
-     * @param {String} message 
-     */
-    hide() {
-        this.reset();
-        ContainerAsync.delay(600, () => {
-            this.events.trigger(BannerLabel.EVENT_HIDDEN);
-        });
+    async hide() {
+        if (this.active) {
+           this.active.hide();
+        }
+
+        if (!this.isVisible) {
+            // Already hidden
+            return;
+        }
+        StyleSelectorAccessor.from(this.component.get("bannerLabel"))
+            .enable(BannerLabel.LABEL)
+            .enable(BannerLabel.LABEL_HIDDEN);
+
+        this.events.trigger(BannerLabel.EVENT_HIDDEN);
+        this.isVisible = false;
     }
 
-    reset() {
-		this.component.get("bannerLabel").setAttributeValue("class", "banner-label banner-label-hidden");
-        this.active.hide();
+    async reset() {
+        if (this.active) {
+           this.active.hide();
+        }
+
+        if (!this.isVisible) {
+            // Already hidden
+            return;
+        }
+
+        StyleSelectorAccessor.from(this.component.get("bannerLabel"))
+            .enable(BannerLabel.LABEL)
+            .enable(BannerLabel.LABEL_HIDDEN);
+
         this.isVisible = false;
     }
 
@@ -146,16 +158,22 @@ export class BannerLabel {
      * @param {String} header
      * @param {String} message
      */
-     showBanner(banner, header, message) {
-        this.reset();
+     async showBanner(banner, header, message) {
+        if (this.active) {
+           this.active.hide();
+        }
+
+        await this.events.trigger(BannerLabel.EVENT_SHOWN);
+
 		banner.setMessage(header, message);
-        banner.show();
-        this.component.get("bannerLabel").setAttributeValue("class", "banner-label banner-label-visible");
+        await banner.show();
+
+        StyleSelectorAccessor.from(this.component.get("bannerLabel"))
+            .enable(BannerLabel.LABEL)
+            .disable(BannerLabel.LABEL_HIDDEN);
+
         this.isVisible = true;
 		this.active = banner;
-        ContainerAsync.delay(600, () => {
-            this.events.trigger(BannerLabel.EVENT_SHOWN);
-        });
     }
 }
 

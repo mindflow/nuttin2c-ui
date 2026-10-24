@@ -60,18 +60,6 @@ export class BannerLabelMessage {
                 .style("width", "100%")
             .close()
 
-            .selector(".banner-label-message-visible")
-            .open()
-                .style("opacity", "0.8")
-                .style("transition", "opacity .5s .1s")
-            .close()
-
-            .selector(".banner-label-message-hidden")
-            .open()
-                .style("opacity", "0")
-                .style("transition", "opacity .5s 0s")
-            .close()
-
             .selector(".banner-label-message-close-button")
             .open()
                 .style("margin-left", "15pt")
@@ -149,12 +137,12 @@ export class BannerLabelMessage {
 
             .selector(".banner-label-message-spacing-above")
             .open()
-                .style("margin-top", "0.5rem")
+                .style("margin-top", "0rem")
             .close()
 
             .selector(".banner-label-message-spacing-below")
             .open()
-                .style("margin-bottom", "0.5rem")
+                .style("margin-bottom", "0rem")
             .close()
 
             .selector(".banner-label-message-spacing-above-below")
@@ -217,33 +205,27 @@ export class BannerLabelMessage {
         this.events.trigger(BannerLabelMessage.EVENT_CLOSE_CLICKED);
     }
 
-    hide() {
-        StyleSelectorAccessor.from(this.messageContentElement)
-            .disable("banner-label-message-visible")
-            .enable("banner-label-message-hidden");
+    async hide() {
+        if (!this.isVisible) {
+            // Already hidden
+            return;
+        }
+        
+        StyleAccessor.from(this.component.get("bannerLabelMessage"))
+            .set("display", "none");
 
         this.isVisible = false;
-        
-        TimePromise.asPromise(500, () => {
-            if (!this.isVisible) {
-                StyleAccessor.from(this.component.get("bannerLabelMessage"))
-                    .set("display", "none");
-            }
-        });
     }
 
-    show() {
+    async show() {
+        if (this.isVisible) {
+            // Already visible
+            return;
+        }
+
         StyleAccessor.from(this.component.get("bannerLabelMessage"))
             .set("display", "block");
 
-        TimePromise.asPromise(50, () => {
-            if (this.isVisible) {
-                StyleSelectorAccessor.from(this.messageContentElement)
-                    .disable("banner-label-message-hidden")
-                    .enable("banner-label-message-visible")
-            }
-        });
-        
         this.isVisible = true;
     }
 
