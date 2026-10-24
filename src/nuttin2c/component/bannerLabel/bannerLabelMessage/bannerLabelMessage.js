@@ -205,6 +205,12 @@ export class BannerLabelMessage {
         this.events.trigger(BannerLabelMessage.EVENT_CLOSE_CLICKED);
     }
 
+    async delayedHide() {
+        await TimePromise.asPromise(500, () => {
+            this.hide();
+        });
+    }
+
     async hide() {
         if (!this.isVisible) {
             // Already hidden

@@ -55,6 +55,8 @@ export class BannerLabel {
                 .style("width", "100%")
                 .style("overflow", "hidden")
                 .style("position", "relative")
+                .style("max-height", "100px")
+                .style("transition", "max-height 0.6s")
             .close()
 
             .selector(".banner-label-hidden")
@@ -121,7 +123,7 @@ export class BannerLabel {
 
     async hide() {
         if (this.active) {
-           this.active.hide();
+           this.active.delayedHide();
         }
 
         if (!this.isVisible) {

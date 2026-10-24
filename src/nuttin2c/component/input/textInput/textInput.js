@@ -35,7 +35,7 @@ export class TextInput extends CommonInput {
        Css3StylesheetBuilder.create(stylesheetBuilder)
             .selector(".text-input-container")
                 .position("relative")
-                .padding("0.5rem")
+                .padding("0.7rem")
 
             .selector(".text-input-entry")
                 .display("block")
@@ -60,7 +60,7 @@ export class TextInput extends CommonInput {
                 .position("absolute")
                 .padding("0", "0.25rem", "0", "0.25rem")
                 .borderRadius("0.5rem")
-                .top("-0.1rem")
+                .top("0.1rem")
                 .left("0.4rem")
                 .margin("0", null, "0.5rem", null)
                 .fontSize("0.9rem")
