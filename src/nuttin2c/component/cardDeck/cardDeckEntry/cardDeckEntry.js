@@ -59,16 +59,24 @@ export class CardDeckEntry {
                 .transform("translate(0%, 0%)")
                 .transition(["transform", ".6s"])
 
-            .selector(".card-deck-entry.position-right")
-                .transform("translate(+100.5%, 0%)")
-                .transition(["transform", ".6s"])
-
             .selector(".card-deck-entry-content.existance-removed")
                 .display("none")
 
             .selector(".card-deck-entry-content.existance-present")
                 .position("relative")
                 .height("100%")
+
+            .media(null, "516px")
+                .selector(".card-deck-entry.position-right")
+                    .visibility("hidden")
+                    .transform("translate(+100%, 0%)")
+                    .transition(["transform", ".6s"])
+                    
+            .media("517px", null)
+                .selector(".card-deck-entry.position-right")
+                    .visibility("hidden")
+                    .transform("translate(0%, -100.5%)")
+                    .transition(["transform", ".6s"])
 
             .build();
     }
