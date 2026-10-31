@@ -2783,7 +2783,7 @@ class LinePanel {
 			this.component.setChild("buttonPanel", this.buttonPanel.component);
 		}
 
-		this.arrayState.react(this, this.handleArrayState, null, nuttin2cCore_v1.StateManager.ANY);
+		this.arrayState.react(this, this.handleArrayState, null, nuttin2cCore_v1.StateManager.KEY_ANY);
 
 	}
 
@@ -4582,7 +4582,7 @@ class TreePanelEntry {
 
 		this.component.setChild("message", this.bannerLabel.component);
 
-        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, nuttin2cCore_v1.StateManager.ANY);
+        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, nuttin2cCore_v1.StateManager.KEY_ANY);
 
     }
 

@@ -63,7 +63,7 @@ export class LinePanel {
 			this.component.setChild("buttonPanel", this.buttonPanel.component);
 		}
 
-		this.arrayState.react(this, this.handleArrayState, null, StateManager.ANY);
+		this.arrayState.react(this, this.handleArrayState, null, StateManager.KEY_ANY);
 
 	}
 

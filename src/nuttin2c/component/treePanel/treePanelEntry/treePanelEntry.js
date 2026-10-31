@@ -106,7 +106,7 @@ export class TreePanelEntry {
 
 		this.component.setChild("message", this.bannerLabel.component);
 
-        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, StateManager.ANY);
+        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, StateManager.KEY_ANY);
 
     }
 

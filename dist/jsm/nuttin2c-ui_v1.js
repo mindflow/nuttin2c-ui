@@ -2779,7 +2779,7 @@ class LinePanel {
 			this.component.setChild("buttonPanel", this.buttonPanel.component);
 		}
 
-		this.arrayState.react(this, this.handleArrayState, null, StateManager.ANY);
+		this.arrayState.react(this, this.handleArrayState, null, StateManager.KEY_ANY);
 
 	}
 
@@ -4578,7 +4578,7 @@ class TreePanelEntry {
 
 		this.component.setChild("message", this.bannerLabel.component);
 
-        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, StateManager.ANY);
+        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, StateManager.KEY_ANY);
 
     }
 
