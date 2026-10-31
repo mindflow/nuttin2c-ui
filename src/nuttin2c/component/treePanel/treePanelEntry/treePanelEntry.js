@@ -5,7 +5,8 @@ import { Component,
 	StateManager,
 	ComponentBuilder,
 	InlineComponentFactory,
-	StyleSelectorAccessor
+	StyleSelectorAccessor,
+	StateChange
 } from "nuttin2c-core_v1";
 import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
 import { Panel } from "../../panel/panel.js";
@@ -105,9 +106,7 @@ export class TreePanelEntry {
 
 		this.component.setChild("message", this.bannerLabel.component);
 
-        this.arrayState.react(
-			new Method(this.handleDomainChange, this),
-			new Method(this.handleErrorChange,this));
+        this.arrayState.react(this, this.handleDomainChange, this.handleErrorChange, StateManager.ANY);
 
     }
 
@@ -116,19 +115,18 @@ export class TreePanelEntry {
 	}
 
     /**
-     * @param {Object} object 
+     * @param {StateChange[]} stateChangeArray 
      */
-    async handleDomainChange(object) {
-		if (object instanceof Array) {
-
-			this.component.clearChildren("subrecordElements");
-			this.toggleChildElements(true);
-			this.toggleSpinner(true);
-			object.forEach(async (record) => {
-				this.component.addChild("subrecordElements", await this.createSubEntry(record));
-			});
+    async handleDomainChange(stateChangeArray) {
+		this.component.clearChildren("subrecordElements");
+		this.toggleChildElements(true);
+		this.toggleSpinner(true);
+		for (const stateChange of stateChangeArray)  {
+			const record = stateChange.object;
+			this.component.addChild("subrecordElements", await this.createSubEntry(record));
 		}
 		this.toggleSpinner(false);
+
     }
 
 	handleErrorChange(error) {

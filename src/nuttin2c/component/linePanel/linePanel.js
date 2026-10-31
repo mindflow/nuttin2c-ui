@@ -1,6 +1,6 @@
 import { Logger, Method } from "coreutil_v1";
 import { InjectionPoint, PrototypeConfig, Provider, TypeConfigPack } from "mindi_v1";
-import { Component, EventManager, StateManager, InlineComponentFactory, ComponentBuilder } from "nuttin2c-core_v1";
+import { Component, EventManager, StateManager, InlineComponentFactory, ComponentBuilder, StateChange } from "nuttin2c-core_v1";
 import { Panel } from "../panel/panel.js";
 import { LinePanelEntry } from "./linePanelEntry/linePanelEntry.js";
 import { ContainerEvent } from "containerbridge_v1";
@@ -63,7 +63,7 @@ export class LinePanel {
 			this.component.setChild("buttonPanel", this.buttonPanel.component);
 		}
 
-		this.arrayState.react(new Method(this.handleArrayState, this));
+		this.arrayState.react(this, this.handleArrayState, null, StateManager.ANY);
 
 	}
 
@@ -77,13 +77,14 @@ export class LinePanel {
 	}
 
     /**
-     * @param {Array} array 
+     * @param {StateChange[]} stateChangeArray 
      */
-    async handleArrayState(array) {
+    async handleArrayState(stateChangeArray) {
 		this.component.clearChildren("recordElements");
-		array.forEach(async (record) => {
-            this.component.addChild("recordElements", await this.populateRecord(record));
-        });		
+		for (const statChange of stateChangeArray) {
+			const record = statChange.object;
+			this.component.addChild("recordElements", await this.populateRecord(record));
+		}
     }
 
 	/**

@@ -56,7 +56,7 @@ export class FileUpload {
 
         /** @type {StateManager<ContainerFileData>}  */
         this.fileArrayState = new StateManager();
-        this.fileArrayState.react(new Method(this.checkFileUploadComplete, this));
+        this.fileArrayState.react(this, this.checkFileUploadComplete);
 
         /** @type {Provider<FileUploadEntry>} */
         this.fileUploadEntryProvider = InjectionPoint.provider(FileUploadEntry);
@@ -272,7 +272,7 @@ export class FileUpload {
         // Handle supported files
         if (supportedFiles.length > 0) {
             if (this.multiple === false) {
-                this.fileArrayState.clear();
+                this.fileArrayState.reset();
             }
             for (const file of supportedFiles) {
                 addedFiles.push(await this.fileArrayState.updateDomain(file, file.name));
@@ -372,7 +372,7 @@ export class FileUpload {
         for (const file of this.fileArrayState.domainMap.values()) {
             const fileEntry = await this.fileUploadEntryProvider.get([file]);
             fileEntry.events.listenTo(FileUploadEntry.EVENT_REMOVE_CLICKED, this.removeFileEntry, this);
-            this.fileArrayState.reactTo(file.name, new Method(fileEntry.updateProgress, fileEntry));
+            this.fileArrayState.react(fileEntry, fileEntry.updateProgress, null, file.name);
             fileList.addChild(fileEntry.component);
         }
     }
