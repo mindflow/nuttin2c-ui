@@ -397,7 +397,7 @@ export class FileUpload {
      * @param {any} args
      */
     async removeFileEntry(event, file, args) {
-        this.fileArrayState.delete(file.name);
+        this.fileArrayState.remove(file.name);
         // Clear unsupported files when updating file list
         const unsupportedDiv = this.component.get("unsupported");
         unsupportedDiv.clear();
