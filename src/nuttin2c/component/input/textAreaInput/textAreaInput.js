@@ -128,7 +128,7 @@ export class TextAreaInput {
             .open()
                 .node("div", "id=bubbleMessage")
                 .node("label", "id=label", "class=text-area-label hidden")
-                .node("textArea", "id=textArea", "class=text-area-entry")
+                .node("textarea", "id=textArea", "class=text-area-entry")
             .close()
             .build();
     }
