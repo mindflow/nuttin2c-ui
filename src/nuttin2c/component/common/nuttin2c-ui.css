@@ -399,3 +399,7 @@ input.number-input-entry::-webkit-outer-spin-button,
 input.number-input-entry::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+
+.hand {
+    cursor: pointer;
+}
